@@ -44,7 +44,7 @@ Todo novo repositório deve possuir, sempre que aplicável, os seguintes itens n
 
 - `.gitignore`
 - `readme.md`
-- `spec_root.md`
+- `spec-root.md`
 - `flow.md`
 - `rules.md`
 - `status.md`
@@ -54,8 +54,8 @@ Todo novo repositório deve possuir, sempre que aplicável, os seguintes itens n
 - `tools-windows.md`
 - `.cursorrules`
 - `.prompt-status`
-- `spec_template.md`
-- `rules_scripts.md`
+- `spec-template.md`
+- `rules-scripts.md`
 - `docs/`
 - `ideas/`
 - `specs/`
@@ -79,7 +79,7 @@ Define o que não deve entrar no versionamento.
 ### 3.2 `readme.md`
 Explica o projeto para humanos: propósito, visão, escopo e uso inicial.
 
-### 3.3 `spec_root.md`
+### 3.3 `spec-root.md`
 É a autoridade arquitetural máxima do repositório.
 
 ### 3.4 `flow.md`
@@ -109,10 +109,10 @@ Define comportamento, honestidade, limites e formato de resposta do agente no re
 ### 3.12 `.prompt-status`
 Rastreia o prompt em andamento, o último prompt concluído, o LLM utilizado, a duração e os acumulados de execução.
 
-### 3.13 `spec_template.md`
+### 3.13 `spec-template.md`
 Fornece o molde para novas specs do projeto.
 
-### 3.14 `rules_scripts.md`
+### 3.14 `rules-scripts.md`
 Define a governança de criação e execução de scripts, incluindo organização, input, cabeçalho, autodetecção da raiz, UX operacional e desinstalação reversa.
 
 ### 3.15 `docs/`
@@ -161,7 +161,7 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Documentação relacionada.
 - Estado atual.
 
-### 4.3 `spec_root.md`
+### 4.3 `spec-root.md`
 - Propósito do projeto.
 - Visão geral.
 - Princípios fundacionais.
@@ -255,7 +255,7 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Resumo curto da tarefa.
 - Acumulados de prompts e tempo.
 
-### 4.13 `spec_template.md`
+### 4.13 `spec-template.md`
 - Título.
 - Objetivo.
 - Dependências.
@@ -271,7 +271,7 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Próxima spec.
 - Se aplicável, impacto sobre `.prompt-status` e sobre os fluxos de rastreio do Cursor AI.
 
-### 4.14 `rules_scripts.md`
+### 4.14 `rules-scripts.md`
 - Propósito.
 - Escopo.
 - Limpeza inicial da tela.
@@ -303,7 +303,7 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 ### 4.17 `specs/`
 - Specs formais.
 - Cada spec com escopo e critério de aceite.
-- Relacionamento explícito com `spec_root.md`.
+- Relacionamento explícito com `spec-root.md`.
 - Ordem por domínio ou grupo.
 
 ### 4.18 `references/`
@@ -410,11 +410,11 @@ Sempre que o usuário precisar tomar uma escolha, o script deve exibir uma lista
 O `flow.md` deve orientar a sequência de trabalho no repositório.
 
 ### Estrutura mínima
-1. Ler `spec_root.md`.
+1. Ler `spec-root.md`.
 2. Ler `rules.md`.
 3. Ler `.cursorrules`.
 4. Ler `.prompt-status`.
-5. Ler `rules_scripts.md` quando a tarefa envolver scripts.
+5. Ler `rules-scripts.md` quando a tarefa envolver scripts.
 6. Ler `status.md` e `timeline.md` para contexto atual.
 7. Ler `specs/` e `docs/` relevantes.
 8. Planejar a entrega.
@@ -485,7 +485,7 @@ O Cursor deve:
 - reconhecer a natureza do projeto;
 - criar a raiz documental mínima;
 - preencher os arquivos com wireframes adequados ao domínio;
-- manter consistência entre `spec_root.md`, `rules.md`, `.cursorrules`, `.prompt-status`, `flow.md` e `rules_scripts.md`;
+- manter consistência entre `spec-root.md`, `rules.md`, `.cursorrules`, `.prompt-status`, `flow.md` e `rules-scripts.md`;
 - não confundir arquivo de visão com arquivo operacional;
 - manter `status.md` e `timeline.md` vivos desde o início;
 - colocar tudo que é específico do projeto sob `/core` sempre que aplicável;
