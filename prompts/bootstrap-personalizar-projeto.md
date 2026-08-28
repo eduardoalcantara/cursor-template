@@ -13,6 +13,6 @@ Faça somente o seguinte:
 2. Atualizar `status.md` com o estado inicial do projeto real.
 3. Adicionar uma entrada em `timeline.md` registrando a criação do projeto a partir do template.
 4. Criar a primeira spec em `specs/to-do/` usando `spec-template.md`, com escopo **[DESCREVER]**.
-5. Atualizar `.prompt-status` no início e no fim conforme `flow.md`.
+5. Atualizar `.prompt-status` **somente na entrada** conforme `flow.md` (exceção: pedido exclusivo Commit + Push).
 
 Não implemente o domínio ainda. Não altere a estrutura de pastas sem necessidade. Coloque conteúdo específico futuro em `/core`.

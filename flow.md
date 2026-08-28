@@ -19,14 +19,13 @@ Não pular a leitura obrigatória. Não começar implementação sem contexto.
 1. Ler os documentos-raiz na ordem acima.
 2. Identificar o escopo confirmado da tarefa.
 3. Planejar a entrega (arquivos, validações, impactos).
-4. Atualizar `.prompt-status` no início (`current_prompt_status = running`).
+4. Atualizar `.prompt-status` no início (`current_prompt_status = running`; entrada apenas — ver § abaixo).
 5. Implementar ou documentar somente o escopo confirmado.
 6. Validar o que foi feito.
 7. Atualizar `status.md`.
 8. Atualizar `timeline.md`.
 9. Produzir relatório em `reports/` quando a entrega for material.
-10. Atualizar `.prompt-status` ao concluir (`success`, `blocked` ou `failed`).
-11. Registrar próximos passos na resposta e em `status.md`.
+10. Registrar próximos passos na resposta e em `status.md`.
 
 ## Ordem de decisões
 
@@ -46,14 +45,13 @@ Antes de mudanças amplas (refactors, remoções, mudança de arquitetura):
 ## Checklist de execução
 
 - [ ] Documentos-raiz lidos
-- [ ] `.prompt-status` atualizado no início
+- [ ] `.prompt-status` atualizado na entrada (exceto pedido exclusivo Commit + Push)
 - [ ] Escopo confirmado
 - [ ] Implementação limitada ao escopo
 - [ ] Validações executadas ou declaradas como pendentes
 - [ ] `status.md` atualizado
 - [ ] `timeline.md` atualizado
 - [ ] Relatório criado (se aplicável)
-- [ ] `.prompt-status` atualizado no fim
 
 ## Passos de validação
 
@@ -63,14 +61,15 @@ Antes de mudanças amplas (refactors, remoções, mudança de arquitetura):
 
 ## Passos de encerramento
 
-1. Atualizar `.prompt-status` com fim, duração, LLM, status e resumo.
-2. Responder com: alterações, validações, pendências, arquivos impactados, próximo passo, documentos que justificam a ação.
-3. Nenhum prompt deve ser tratado como concluído sem atualizar `.prompt-status`.
+1. Responder com: alterações, validações, pendências, arquivos impactados, próximo passo, documentos que justificam a ação.
+2. Rodapé com dados de `.prompt-status`: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
+3. **Não** atualizar `.prompt-status` na saída; a finalização ocorre na entrada do prompt seguinte.
 
 ## Leitura e atualização de `.prompt-status`
 
 | Momento | Ação |
 |---|---|
 | Antes de iniciar | Ler o arquivo |
-| No início | Preencher seção `[current]` com status `running` |
-| No fim | Mover/atualizar `[last]`, limpar ou fechar `[current]`, atualizar `[totals]` |
+| Na entrada | Finalizar prompt anterior em `[last]` (se existir); preencher `[current]` com status `running` |
+| Na saída | **Proibido** alterar o arquivo |
+| Commit + Push exclusivo | **Não** alterar o arquivo (nem na entrada) |

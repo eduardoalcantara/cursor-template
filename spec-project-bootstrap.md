@@ -34,7 +34,11 @@ Tudo que for específico do projeto deve viver sob `/core` sempre que isso não 
 Todo projeto deve conter um arquivo `.prompt-status` na raiz para rastrear a execução de cada prompt/tarefa do Cursor AI.
 
 ### 1.7 Rastreamento de execução é obrigatório
-Antes de executar um prompt, o Cursor AI deve ler `.prompt-status`; ao iniciar e ao concluir a tarefa, deve atualizar esse arquivo com o estado atual, o LLM em uso e o resultado obtido.
+Antes de executar um prompt, o Cursor AI deve ler `.prompt-status`.
+
+**Regra de atualização (entrada apenas):** o agente atualiza `.prompt-status` **somente no início da resposta** (entrada do prompt), **nunca no encerramento** (saída da resposta). Na entrada, o prompt anterior (se houver) é finalizado e movido para `[last]`; o prompt atual é registrado em `[current]` com status `running`, LLM, horário de início e resumo.
+
+**Exceção — Commit + Push:** quando o pedido do usuário for **exclusivamente** versionamento Git (`commit`, `push`, `commit + push` ou equivalente), **não** atualizar `.prompt-status` (nem na entrada). Objetivo: evitar commit/push desnecessário só por causa do rastreio.
 
 ---
 
@@ -68,6 +72,11 @@ Todo novo repositório deve possuir, sempre que aplicável, os seguintes itens n
 
 ### Regra
 Pastas opcionais podem não existir em todos os projetos, mas a intenção estrutural deve permanecer clara.
+
+### Convenção de nomenclatura (arquivos na raiz)
+- Arquivos Markdown de governança na raiz usam **hífen** (`-`) como separador de palavras, **nunca** underscore (`_`).
+- Exemplos corretos: `spec-root.md`, `spec-template.md`, `rules-scripts.md`, `tools-linux.md`, `tools-windows.md`.
+- Ao criar um repositório a partir deste template, o Cursor deve **preservar exatamente** esses nomes com hífen.
 
 ---
 
@@ -107,13 +116,13 @@ Lista ferramentas, pacotes e comandos relevantes para Windows.
 Define comportamento, honestidade, limites e formato de resposta do agente no repositório.
 
 ### 3.12 `.prompt-status`
-Rastreia o prompt em andamento, o último prompt concluído, o LLM utilizado, a duração e os acumulados de execução.
+Rastreia o prompt em andamento, o último prompt concluído, o LLM utilizado, a duração e os acumulados de execução. Atualização **apenas na entrada** de cada resposta (ver §5.10 e §11).
 
 ### 3.13 `spec-template.md`
 Fornece o molde para novas specs do projeto.
 
 ### 3.14 `rules-scripts.md`
-Define a governança de criação e execução de scripts, incluindo organização, input, cabeçalho padronizado e colorido, autodetecção da raiz, UX operacional (inclusive modos de automação) e desinstalação reversa.
+Define a governança de criação e execução de scripts, incluindo organização, input, cabeçalho, autodetecção da raiz, UX operacional e desinstalação reversa.
 
 ### 3.15 `docs/`
 Armazena documentação técnica, operacional, normativa e de produto.
@@ -181,7 +190,7 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Checklist de execução.
 - Passos de validação.
 - Passos de encerramento.
-- Leitura e atualização de `.prompt-status` no início e no fim de cada prompt.
+- Leitura de `.prompt-status` no início de cada prompt e atualização **somente na entrada** (nunca na saída).
 
 ### 4.5 `rules.md`
 - Hierarquia normativa.
@@ -192,7 +201,6 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Regras de validação.
 - Regras de bloqueio.
 - Regras de atualização.
-- **CCIA**: Continuidade de Contexto para IA (Logs diários do chat na pasta `prompts/`).
 
 ### 4.6 `status.md`
 - Data da última atualização.
@@ -238,14 +246,13 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Perfil do agente.
 - Comportamento esperado.
 - Honestidade e bloqueio.
-- Regras de resposta (incluindo rodapé obrigatório com metadados do `.prompt-status`).
+- Regras de resposta.
 - Regras de validação.
 - Regras de escopo.
-- CCIA: Continuidade de Contexto para IA (obrigação de registrar chat em `prompts/chat-YYYY-MM-DD-<hostname>.md`).
 - Regras de atualização documental.
 - Regras de dados mínimos por resposta.
 - Regras de scripts e input.
-- Regras de leitura e atualização de `.prompt-status`.
+- Regras de leitura e atualização de `.prompt-status` (entrada apenas; exceção Commit + Push).
 
 ### 4.12 `.prompt-status`
 - Prompt em andamento.
@@ -271,21 +278,22 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Validações.
 - Riscos.
 - Próxima spec.
-- Se aplicável, impacto sobre `.prompt-status` e sobre os fluxos de rastreio do Cursor AI.
+- Se aplicável, impacto sobre os fluxos de rastreio do Cursor AI.
 
 ### 4.14 `rules-scripts.md`
-- Propósito e escopo.
+- Propósito.
+- Escopo.
 - Limpeza inicial da tela.
-- Cabeçalho operacional tabelado, obrigatoriamente renderizado em ciano usando caracteres ASCII/OEM 437.
+- Cabeçalho operacional.
 - Organização por categoria macro.
 - Descoberta da raiz do repositório.
-- Parâmetros mínimos, input interativo numerado (`0`/`1`).
-- Modos não-interativo e remoto (`--quiet`, `--force`, `--ssh`, `--log`).
+- Parâmetros mínimos e input interativo.
 - Uso de caminhos internos.
 - Mensagens e UX operacional.
 - Equivalência comportamental entre Linux e Windows.
 - Scripts de instalação e desinstalação.
-- Atualização documental e Regra final.
+- Atualização documental.
+- Regra final.
 
 ### 4.15 `docs/`
 - Documentação técnica.
@@ -373,7 +381,7 @@ Toda resposta relevante deve privilegiar:
 - quais arquivos foram impactados;
 - qual o próximo passo;
 - quais documentos justificam a ação.
-- OBRIGATÓRIO: Terminar a resposta com o resumo do `.prompt-status` na última linha: `[Prompt #X | LLM: <Nome> | Tempo: <Tempo>]` (se durar > 60s, exiba em minutos e segundos, ex: `1m 30s`)
+- usar os dados do arquivo `.prompt-status` para mostrar nº da interação, tempo de processamento e modelos de linguagem usados na tarefa: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
 
 ### 5.4 Leitura obrigatória
 Antes de agir, o agente deve ler os documentos-raiz relevantes.
@@ -398,18 +406,27 @@ Sempre que o usuário precisar tomar uma escolha, o script deve exibir uma lista
 - Entrada inválida deve gerar novo prompt claro.
 
 ### 5.10 Regras de `.prompt-status`
-- Ler `.prompt-status` antes de iniciar qualquer prompt.
-- Atualizar `.prompt-status` no início e no fim de cada prompt.
-- Registrar o LLM usado na execução atual.
-- Registrar o tempo de início, fim e duração.
-- Registrar o status final e um resumo curto da tarefa.
-- Preservar o histórico recente sem sobrescrever o que já foi concluído.
 
-### 5.11 CCIA: Continuidade de Contexto para IA
-Para lidar com o problema de fragmentação de histórico (diferentes instâncias do Cursor nas máquinas ou Cloud Agents), o agente deve SEMPRE:
-- Salvar a pergunta do usuário e um resumo executivo da sua resposta (decisões, códigos modificados, bugs arrumados).
-- Utilizar o arquivo correspondente ao dia e máquina: `prompts/chat-YYYY-MM-DD-<hostname>.md` (anexando ao final do arquivo).
-- Assim, outra instância da IA poderá ser instruída a ler estes arquivos para recuperar todo o histórico de decisões e pensamentos, superando a barreira de contexto local de cada IDE.
+#### Momento da atualização
+- **Entrada (obrigatório):** no **início** de cada resposta, após ler o arquivo, atualizar `.prompt-status`.
+- **Saída (proibido):** **não** atualizar `.prompt-status` ao finalizar a resposta, mesmo que a tarefa tenha sido concluída, bloqueada ou falhado.
+
+#### Fluxo na entrada de um prompt normal
+1. Ler `.prompt-status`.
+2. Se `[current]` contiver dados do prompt anterior (`current_prompt_number` preenchido):
+   - Copiar para `[last]` com `last_prompt_end_time` = agora, calcular `last_prompt_duration_seconds`, definir `last_prompt_status` (`success`, `blocked` ou `failed`) e `last_prompt_summary` com base no que foi entregue na interação anterior.
+   - Incrementar `total_prompts_tracked` e somar duração em `total_execution_seconds`.
+3. Preencher `[current]` para o prompt atual: número incrementado, `current_prompt_start_time` = agora, `current_prompt_status` = `running`, LLM e resumo curto do pedido do usuário.
+4. Limpar campos de fim/duração em `[current]` (ficam vazios até a próxima entrada).
+
+#### Exceção — pedido exclusivo de Commit + Push
+Quando o usuário pedir **somente** operação Git de versionamento (`commit`, `push`, `commit + push`, `commit e push` ou equivalente, sem outra tarefa de implementação/documentação):
+- **Não** ler para atualizar (pode ler para contexto, se útil).
+- **Não** alterar `.prompt-status` na entrada **nem** na saída.
+- Objetivo: o commit/push do usuário não deve incluir mudança espúria em `.prompt-status`.
+
+#### Rodapé da resposta
+- Usar dados de `[last]` (prompt já finalizado na entrada **desta** resposta) ou, se aplicável, estimativa a partir de `[current]`, para o rodapé: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
 
 ---
 
@@ -427,20 +444,20 @@ O `flow.md` deve orientar a sequência de trabalho no repositório.
 7. Ler `specs/` e `docs/` relevantes.
 8. Planejar a entrega.
 9. Implementar ou documentar somente o escopo confirmado.
-10. Atualizar `.prompt-status` no início da execução.
+10. Atualizar `.prompt-status` no início da execução (entrada apenas; ver §5.10).
 11. Validar o que foi feito.
 12. Atualizar `status.md`.
 13. Atualizar `timeline.md`.
-14. Atualizar `.prompt-status` ao concluir a execução.
-15. Produzir relatório de entrega.
-16. Registrar próximos passos.
+14. Produzir relatório de entrega.
+15. Registrar próximos passos.
 
 ### Regras
 - Não pular leitura obrigatória.
 - Não começar implementação sem contexto.
 - Não misturar grupos ou temas sem autorização.
 - Encerrar cada tarefa com validação e atualização documental.
-- Nenhum prompt deve ser tratado como concluído sem atualizar `.prompt-status`.
+- **Não** atualizar `.prompt-status` na saída da resposta; a finalização do prompt ocorre na **entrada** do prompt seguinte.
+- Em pedido **exclusivo** de Commit + Push, **não** alterar `.prompt-status`.
 
 ---
 
@@ -448,28 +465,22 @@ O `flow.md` deve orientar a sequência de trabalho no repositório.
 
 Todo script de instalação deve oferecer um modo de desinstalação reversa, preferencialmente por `--uninstall` ou equivalente documentado.
 
-### Regras de Reversão
+### Regras
 - O modo de desinstalação deve desfazer exclusivamente as alterações realizadas pelo script.
 - O modo de desinstalação deve preservar conteúdo que não foi criado por ele.
 - O modo de desinstalação deve falhar de forma segura se não puder reverter algo integralmente.
 - Se o script instalar, configurar, registrar ou copiar algo, precisa existir caminho documentado para desfazer isso.
 - A reversão deve ser previsível, explícita e segura.
 
-### Visualização
-Todo script interativo deve iniciar limpando a tela (`clear`) e renderizando um cabeçalho de tabela estruturada em caracteres ASCII/OEM (code page 437) colorida em Ciano, exibindo metadados operacionais fixos separados por linha horizontal de informações em tempo de execução.
-
 ### Regra de input do usuário
-Sempre que o usuário precisar tomar uma escolha, o script deve exibir uma lista numerada de opções e aguardar que ele digite o número correspondente. (NUNCA solicite `s/n` ou texto aberto sem necessidade explícita).
+Sempre que o usuário precisar tomar uma escolha, o script deve exibir uma lista numerada de opções e aguardar que ele digite o número correspondente.
 
 ### Convenção obrigatória de seleção
-- `0` significa sempre `não`, `false`, `no` ou `abortar`.
-- `1` significa sempre `sim`, `true`, `yes` ou `continuar`.
+- `0` significa sempre `não`, `false` ou `no`.
+- `1` significa sempre `sim`, `true` ou `yes`.
 - Pressionar `Enter` sem digitar nada deve selecionar a opção default documentada.
 - O script deve validar a opção escolhida antes de seguir.
 - Se a entrada for inválida, o script deve repetir a solicitação de forma clara.
-
-### Suporte a automação
-- Todo script interativo de alteração sistêmica DEVE permitir o modo automático via opções padrão de linha de comando: `--quiet` (suprime input), `--force` (autoriza ações destrutivas quando silencioso) e `--ssh` + `--log` (execução segura por agentes e sem TTY, espelhando a saída da tela num arquivo).
 
 ---
 
@@ -500,6 +511,7 @@ O Cursor deve:
 - criar a raiz documental mínima;
 - preencher os arquivos com wireframes adequados ao domínio;
 - manter consistência entre `spec-root.md`, `rules.md`, `.cursorrules`, `.prompt-status`, `flow.md` e `rules-scripts.md`;
+- usar **hífen** (`-`) nos nomes dos arquivos de governança da raiz (nunca underscore);
 - não confundir arquivo de visão com arquivo operacional;
 - manter `status.md` e `timeline.md` vivos desde o início;
 - colocar tudo que é específico do projeto sob `/core` sempre que aplicável;
@@ -519,7 +531,7 @@ Um novo repositório está realmente pronto quando o Cursor consegue responder, 
 - onde ficam as referências;
 - onde fica o núcleo específico do projeto;
 - como o agente deve se comportar;
-- como rastrear o início, o fim e o estado de cada prompt em `.prompt-status`.
+- como rastrear cada prompt em `.prompt-status` (atualização na entrada; exceção Commit + Push).
 
 ---
 
@@ -553,9 +565,12 @@ O arquivo `.prompt-status` deve usar um formato simples de pares `chave = valor`
 - O status deve ser explícito, como `running`, `success`, `blocked` ou `failed`.
 - O campo de LLM deve identificar claramente o modelo usado na tarefa.
 - O arquivo deve ser atualizado sem perder o histórico recente da execução anterior.
+- **Atualizar somente na entrada** de cada resposta do agente; **nunca** na saída.
+- Na entrada: finalizar o prompt anterior em `[last]` (se existir) e abrir `[current]` para o prompt atual.
+- **Exceção:** pedido exclusivo de Commit + Push → não alterar este arquivo.
 
 ---
 
 ## 12. Resumo normativo
 
-`spec-root-repo-build.md` deve ser a raiz universal para criação de qualquer novo repositório no Cursor, com estrutura documental completa, wireframes por arquivo, regras de comportamento do agente, honestidade operacional, suporte a scripts reversíveis, regra de input numerado, fluxo de trabalho explícito, uso obrigatório de `.prompt-status` e centralização do conteúdo específico do projeto em `/core`.
+`spec-root-repo-build.md` deve ser a raiz universal para criação de qualquer novo repositório no Cursor, com estrutura documental completa, wireframes por arquivo, regras de comportamento do agente, honestidade operacional, suporte a scripts reversíveis, regra de input numerado, fluxo de trabalho explícito, uso obrigatório de `.prompt-status` (atualização na entrada; exceção Commit + Push) e centralização do conteúdo específico do projeto em `/core`.

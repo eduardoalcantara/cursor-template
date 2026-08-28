@@ -20,7 +20,8 @@ Este repositório nasce a partir do template universal definido em `spec-project
 3. **Contexto explícito para o agente** — regras, fluxo, estado e histórico visíveis.
 4. **Formato universal, conteúdo adaptável** — espinha dorsal fixa; interior muda por domínio.
 5. **`/core` concentra o específico** — salvo quando o padrão da tecnologia exigir outro local.
-6. **`.prompt-status` é obrigatório** — todo prompt é rastreado do início ao fim.
+6. **`.prompt-status` é obrigatório** — todo prompt é rastreado na **entrada** de cada resposta (exceção: pedido exclusivo Commit + Push).
+7. **Nomenclatura com hífen** — arquivos Markdown de governança na raiz usam `-` (ex.: `spec-root.md`, `rules-scripts.md`), nunca `_`.
 
 ## Escopo
 
@@ -59,8 +60,10 @@ raiz documental (governança)
 ## Regras permanentes
 
 - Não implementar fora do escopo confirmado.
-- Não tratar prompt como concluído sem atualizar `.prompt-status`.
+- Não atualizar `.prompt-status` na saída da resposta; finalização ocorre na entrada do prompt seguinte.
+- Em pedido exclusivo de Commit + Push, não alterar `.prompt-status`.
 - Não colocar conteúdo específico do projeto fora de `/core` sem justificativa normativa.
+- Não renomear arquivos de governança da raiz para underscore; manter hífen conforme `spec-project-bootstrap.md`.
 - Mudanças relevantes atualizam `status.md` e `timeline.md`.
 
 ## Critérios de sucesso
@@ -73,7 +76,7 @@ O repositório está pronto quando o Cursor responde sem ambiguidade:
 - como documentar progresso;
 - onde ficam referências e o núcleo em `/core`;
 - como o agente se comporta;
-- como rastrear cada prompt em `.prompt-status`.
+- como rastrear cada prompt em `.prompt-status` (entrada apenas; exceção Commit + Push).
 
 ## Conclusão normativa
 

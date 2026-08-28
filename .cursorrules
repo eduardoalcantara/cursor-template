@@ -24,11 +24,11 @@
 
 ## Fluxo de `.prompt-status`
 - Ler `.prompt-status` antes de iniciar qualquer prompt.
-- Atualizar `.prompt-status` no início (status `running`) e no fim da execução.
-- Registrar o LLM usado, horários reais de início/fim, duração e resumo curto.
-- Status finais: `success`, `blocked` ou `failed`.
+- Atualizar `.prompt-status` **somente na entrada** (início da resposta), **nunca na saída**.
+- Na entrada: finalizar o prompt anterior em `[last]` (se existir) e abrir `[current]` com status `running`, LLM, horário de início e resumo.
+- Status finais em `[last]`: `success`, `blocked` ou `failed`.
 - Preservar o histórico do último prompt concluído ao iniciar um novo.
-- Nenhum prompt deve ser tratado como concluído sem atualizar `.prompt-status`.
+- **Exceção — Commit + Push:** quando o pedido for **exclusivamente** versionamento Git (`commit`, `push`, `commit + push` ou equivalente), **não** alterar `.prompt-status` (nem na entrada).
 
 ## Dados mínimos por resposta relevante
 Toda resposta de entrega deve privilegiar:
@@ -43,13 +43,8 @@ Toda resposta de entrega deve privilegiar:
 - Responder no idioma do usuário (padrão: português).
 - Ser direto; não encher a resposta com preâmbulos.
 - Citar documentos-raiz quando a ação depender deles.
-- **OBRIGATÓRIO**: A última linha da sua resposta no chat DEVE conter o bloco de resumo extraído do `.prompt-status`, neste formato:
-  `[Prompt #X | LLM: <Nome> | Tempo: <Tempo>]` (onde Tempo exibe em segundos, ou minutos e segundos se durar > 60s, ex: `1m 15s`)
-
-## CCIA: Continuidade de Contexto para IA
-- Para evitar perda de contexto entre instâncias remotas/locais (ex: Cloud Agents, PCs diferentes), grave TODO PROMPT recebido e UM RESUMO DA RESPOSTA num log contínuo.
-- Adicione/anexe ao arquivo `prompts/chat-YYYY-MM-DD-<hostname>.md` (ex: `chat-2026-08-26-eduardo-pc.md`).
-- Faça isso em todas as interações. Assim que terminar a tarefa, documente a conversa lá.
+- **OBRIGATÓRIO**: A última linha da resposta deve usar dados de `.prompt-status` neste formato:
+  `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
 
 ## Regras de escopo
 - Implementar somente o escopo confirmado.

@@ -59,13 +59,8 @@ Pause e peça esclarecimento quando:
 
 - Alterar `spec-root.md` somente com intenção explícita de mudar a arquitetura.
 - Ao mudar regras permanentes, atualizar este arquivo e refletir em `.cursorrules` / `flow.md` se necessário.
-- Ao concluir prompts, atualizar `.prompt-status` sem perder o histórico recente.
-
-## CCIA: Continuidade de Contexto para IA
-
-- Para manter contexto sincronizado via git entre múltiplas máquinas (local, trabalho, cloud agents), **todo prompt do usuário e a resposta consolidada da IA DEVEM ser anexados a um log em Markdown**.
-- O log deve ser salvo em `prompts/chat-YYYY-MM-DD-<hostname>.md` (ex.: `chat-2026-08-26-eduardo-pc.md`).
-- A IA deve sempre anexar a requisição e a resposta ao final desse arquivo, garantindo que outras IAs possam ler a história completa das decisões.
+- Atualizar `.prompt-status` **somente na entrada** de cada resposta; **nunca** na saída.
+- Em pedido **exclusivo** de Commit + Push, **não** alterar `.prompt-status`.
 
 ## Regras de scripts (resumo)
 

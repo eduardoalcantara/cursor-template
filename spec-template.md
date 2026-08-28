@@ -40,14 +40,14 @@ Copie este molde para `specs/to-do/<nome-da-spec>.md` e preencha. Ao concluir, m
 - [ ] [Critério objetivo]
 - [ ] [Critério objetivo]
 - [ ] Documentação atualizada (`status.md`, `timeline.md` quando aplicável)
-- [ ] `.prompt-status` atualizado ao longo da execução
+- [ ] `.prompt-status` atualizado na entrada de cada prompt (exceto Commit + Push exclusivo)
 
 ## Impacto
 
 - Usuários / operadores: [impacto]
 - Arquitetura: [impacto]
 - Documentação: [impacto]
-- `.prompt-status` / rastreio do Cursor AI: [impacto, se houver]
+- `.prompt-status` / rastreio do Cursor AI: [impacto, se houver; lembrar: entrada apenas, exceção Commit + Push]
 
 ## Arquivos afetados
 
