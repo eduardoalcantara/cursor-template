@@ -56,6 +56,8 @@ main() {
   local -a required_files=(
     .gitignore
     .cursorignore
+    scaffold-repo.ps1
+    scaffold-repo.sh
     readme.md
     spec-project-bootstrap.md
     spec-root.md

@@ -10,9 +10,13 @@ A meta é padronizar a raiz do repositório com estrutura, governança, contexto
 
 ### Contrato de reprodução (obrigatório)
 
-Este arquivo (`spec-project-bootstrap.md`) é a **receita normativa** do repositório template. Se o Cursor **ler e implementar** este documento em uma **pasta vazia**, o resultado deve ser um repositório **equivalente** a este template: mesmos arquivos de governança da raiz, mesmas pastas operacionais (com `readme.md` onde aplicável), mesmas regras de `.prompt-status` e CCIA, scripts de validação e cola de bootstrap em `prompts/`.
+Este arquivo (`spec-project-bootstrap.md`) é a **receita normativa** do repositório template (o que deve existir e como o Agent se comporta).
 
-Novos repositórios gerados a partir do template (GitHub Template ou materialização via Cursor) herdam essa estrutura; o domínio específico do projeto vive em `/core` e nos placeholders.
+**Caminho feliz de materialização:** os scripts na **raiz** `scaffold-repo.sh` / `scaffold-repo.ps1` copiam a árvore canônica a partir do template para uma pasta destino (ainda vazia, sem `scripts/`). O Cursor **não** deve reescrever a governança do zero a partir deste documento — isso causa drift entre repos.
+
+**Papel do Cursor após o scaffold:** personalizar placeholders (`specs/optional/bootstrap-personalizar-projeto.md`), promover specs opt-in e implementar domínio em `/core`.
+
+Novos repositórios gerados a partir do template (GitHub Template, scaffold ou clone) herdam essa estrutura; o domínio específico do projeto vive em `/core` e nos placeholders.
 
 ---
 
@@ -60,6 +64,7 @@ Todo novo repositório deve possuir, sempre que aplicável, os seguintes itens n
 
 - `.gitignore`
 - `.cursorignore`
+- `scaffold-repo.ps1` / `scaffold-repo.sh` — materialização determinística (raiz; pasta vazia ainda não tem `scripts/`)
 - `readme.md`
 - `spec-project-bootstrap.md` — esta receita (viaja com o template)
 - `spec-root.md`
@@ -92,13 +97,15 @@ Pastas opcionais podem não existir em todos os projetos, mas a intenção estru
 - Exemplos corretos: `spec-root.md`, `spec-template.md`, `rules-scripts.md`, `tools-linux.md`, `tools-windows.md`, `spec-project-bootstrap.md`.
 - Ao criar um repositório a partir deste template, o Cursor deve **preservar exatamente** esses nomes com hífen.
 
-### 2.1 Árvore canônica (materialização em pasta vazia)
+### 2.1 Árvore canônica (materialização preferencial via scaffold)
 
-O Cursor, ao implementar este documento do zero, deve criar **no mínimo**:
+O gerador \scaffold-repo.ps1\ / \scaffold-repo.sh\ (raiz) deve materializar **no mínimo**:
 
 ```text
 .gitignore
 .cursorignore
+scaffold-repo.ps1
+scaffold-repo.sh
 readme.md
 spec-project-bootstrap.md
 spec-root.md
@@ -152,11 +159,14 @@ Define o que não deve entrar no versionamento.
 ### 3.1b `.cursorignore`
 Define o que o Cursor não deve indexar (binários, downloads, logs, segredos, caches) — melhora busca e desempenho do Agent.
 
+### 3.1c `scaffold-repo.ps1` / `scaffold-repo.sh`
+Scripts de materialização na **raiz** do template (chicken-egg: destino vazio não tem `scripts/`). Copiam a árvore canônica da fonte (pasta do script) para `--target` / `-Destination`. Suportam `--uninstall`, `--quiet`, `--force`, `--ssh`, `--log`. Geram `.scaffold-manifest` para reversão segura.
+
 ### 3.2 `readme.md`
 Explica o projeto para humanos: propósito, visão, escopo e uso inicial.
 
 ### 3.2b `spec-project-bootstrap.md`
-É a receita normativa para materializar o template (este arquivo). Deve viajar com o repositório template e permitir reprodução em pasta vazia.
+É a receita normativa (aceite) do template. A materialização determinística é feita por `scaffold-repo.*`; este arquivo não deve ser “reimplementado” pelo Cursor a cada repo.
 
 ### 3.3 `spec-root.md`
 É a autoridade arquitetural máxima do repositório.
@@ -452,7 +462,7 @@ Toda resposta relevante deve privilegiar:
 - quais arquivos foram impactados;
 - qual o próximo passo;
 - quais documentos justificam a ação.
-- usar os dados do arquivo `.prompt-status` para mostrar nº da interação, tempo de processamento e modelos de linguagem usados na tarefa: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
+- usar os dados do arquivo `.prompt-status` para mostrar nº da interação, tempo de processamento e modelos de linguagem usados na tarefa: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm}m{ss}s.` (ex.: `00m42s`; **não** usar `mm:ss`).
 
 ### 5.4 Leitura condicional
 Não ler a raiz inteira em todo prompt.
@@ -505,8 +515,10 @@ current_prompt_start_time = ISO-8601-com-offset
 Não alterar `.prompt-status` na entrada nem na saída.
 
 #### Rodapé da resposta
-`> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`  
-`Nn` = `current_prompt_number`; duração do turno atual = `agora − current_prompt_start_time`. LLM não fica no arquivo — informar o modelo da sessão.
+`> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm}m{ss}s.`  
+Exemplo correto: `> Resposta do Cursor nº 5, usando Composer, com duração de 00m42s.`  
+Formato **errado**: `00:42`.  
+`Nn` = `current_prompt_number`; duração do turno atual = `agora − current_prompt_start_time` (minutos e segundos com zero à esquerda). LLM não fica no arquivo — informar o modelo da sessão.
 
 ### 5.11 Handoff CCIA multi-máquina
 
@@ -625,36 +637,46 @@ Podem combinar estruturas, desde que a raiz documental permaneça consistente e 
 
 ## 9. Regras para o Cursor ao criar o repositório
 
-### 9.1 Materialização a partir deste documento (pasta vazia)
+### 9.1 Materialização (caminho feliz = script na raiz)
 
-Quando o operador pedir para criar o repositório template (ou equivalente) **somente** com base neste arquivo:
+Pasta vazia **não** tem `scripts/`. Por isso o gerador fica na **raiz** do template:
 
-1. Criar **toda** a árvore canônica da §2.1 (hífen nos nomes; nunca underscore).
-2. Preencher cada arquivo da raiz com o wireframe da §4 e as regras das §5–§7 e §5.10–§5.11.
-3. Incluir cópia deste `spec-project-bootstrap.md` na raiz.
-4. Inicializar `.prompt-status` (template da §11) antes do primeiro prompt útil.
-5. Criar `prompts/readme.md` (CCIA + colas oficiais) e `specs/optional/` (catálogo opt-in, incl. `bootstrap-personalizar-projeto.md`).
-6. Criar `.cursorignore` e `validate-structure.sh` / `.ps1`.
-7. Rodar a validação estrutural e corrigir até passar.
-8. Preencher `status.md` e `timeline.md` com o evento de criação.
-9. **Não** inventar pastas fora do padrão; domínio futuro em `/core`.
-10. **Não** exigir `.cursor/rules/`; usar `.cursorrules` na raiz.
+```powershell
+# Windows — a partir do clone do template
+.\scaffold-repo.ps1 -Destination "G:\Meu Drive\02_projects\meu-app" -Quiet -Force
+```
 
-O repositório só está materializado quando a árvore canônica existe e o validador estrutural passa.
+```bash
+# Linux/macOS
+./scaffold-repo.sh --target /caminho/meu-app --quiet --force
+```
 
-### 9.2 Regras gerais
+Contrato dos scripts:
+1. Fonte = diretório do script (deve conter `spec-project-bootstrap.md`).
+2. Destino ≠ fonte.
+3. Copia a árvore canônica da §2.1 (conteúdos idênticos ao template).
+4. Reinicia `.prompt-status` mínimo no destino.
+5. Grava `.scaffold-manifest` para `--uninstall` reverter só o que criou.
+6. Flags: `--uninstall`, `--quiet`/`-q`, `--force`/`-f`, `--ssh`, `--log` (conforme `rules-scripts.md`).
+7. Após scaffold: rodar `validate-structure` no destino.
+8. Cursor **personaliza** (placeholders / specs opt-in / `/core`) — **não** reescreve a governança do zero.
+
+### 9.2 Exceção — materialização só via Cursor
+
+Só se o operador pedir explicitamente e não houver como executar o script. Nesse caso o Agent segue a §2.1, mas o resultado tende a **divergir** entre repos; validar e preferir re-sincronizar com o scaffold na próxima oportunidade.
+
+### 9.3 Regras gerais
 
 O Cursor deve:
 
 - reconhecer a natureza do projeto;
-- criar a raiz documental mínima **e** a árvore canônica da §2.1;
-- preencher os arquivos com wireframes adequados ao domínio;
+- preferir scaffold + personalização em vez de gerar a raiz do zero;
 - manter consistência entre `spec-project-bootstrap.md`, `spec-root.md`, `rules.md`, `.cursorrules`, `.prompt-status`, `flow.md`, `rules-scripts.md` e `prompts/readme.md`;
 - usar **hífen** (`-`) nos nomes dos arquivos de governança da raiz (nunca underscore);
 - não confundir arquivo de visão com arquivo operacional;
 - manter `status.md` e `timeline.md` vivos desde o início;
 - colocar tudo que é específico do projeto sob `/core` sempre que aplicável;
-- inicializar `.prompt-status` mínimo (2 campos) antes do primeiro prompt útil;
+- inicializar `.prompt-status` mínimo (2 campos) antes do primeiro prompt útil (o scaffold já deixa `0`);
 - garantir CCIA documentado (gravar relevante; ler só sob pedido explícito).
 
 ---
@@ -663,7 +685,7 @@ O Cursor deve:
 
 Um novo repositório está realmente pronto quando:
 
-1. A árvore canônica da §2.1 existe.
+1. A árvore canônica da §2.1 existe (preferencialmente via `scaffold-repo`).
 2. `validate-structure` (`.sh` / `.ps1`) passa sem faltas.
 3. O Cursor consegue responder, sem ambiguidade:
 - o que o projeto é;
@@ -708,4 +730,4 @@ current_prompt_start_time = 2026-01-01T00:00:00-03:00
 
 ## 12. Resumo normativo
 
-`spec-project-bootstrap.md` é a receita reproduzível do template: árvore canônica §2.1, wireframes, `.cursorrules` canônico, `.prompt-status` mínimo (2 campos), CCIA (gravar relevante; ler sob pedido), performance (§5.12), scripts reversíveis, input numerado e domínio em `/core`.
+`spec-project-bootstrap.md` é a receita normativa do template; a materialização determinística é `scaffold-repo.ps1` / `scaffold-repo.sh` na raiz (árvore §2.1), com `.cursorrules` canônico, `.prompt-status` mínimo, CCIA, performance (§5.12), scripts reversíveis e domínio em `/core`.

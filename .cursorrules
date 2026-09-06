@@ -66,8 +66,9 @@ Antes de declarar entrega concluída:
 
 ## Regras de resposta
 - Idioma do usuário (padrão: português). Direto, sem preâmbulos.
-- Última linha: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
-  - `Nn` = `current_prompt_number`; duração = agora − `current_prompt_start_time` (turno atual).
+- Última linha: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm}m{ss}s.`
+  - Exemplo: `> Resposta do Cursor nº 5, usando Composer, com duração de 00m42s.`
+  - `Nn` = `current_prompt_number`; duração do turno = agora − `current_prompt_start_time` (sempre com zero à esquerda em minutos e segundos).
 
 ## Escopo e documentação
 - Só o escopo confirmado; domínio em `/core` quando aplicável.

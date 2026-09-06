@@ -22,9 +22,20 @@ cd <NOME_DO_REPO>
 ## Bootstrap
 
 1. Leia `readme.md`, `spec-root.md`, `rules.md` e `flow.md`.
-2. Substitua placeholders (`[NOME DO PROJETO]`, `[PROPÓSITO]`, etc.).
-3. Confirme que `.prompt-status` existe na raiz.
-4. Valide a estrutura:
+2. **Preferir materialização por script** (não pedir ao Cursor para recriar a raiz do zero):
+
+```powershell
+# A partir do clone deste template
+.\scaffold-repo.ps1 -Destination "<NOVO_REPO>" -Quiet -Force
+```
+
+```bash
+./scaffold-repo.sh --target "<NOVO_REPO>" --quiet --force
+```
+
+3. Substitua placeholders (`[NOME DO PROJETO]`, `[PROPÓSITO]`, etc.) — use `specs/optional/bootstrap-personalizar-projeto.md`.
+4. Confirme que `.prompt-status` existe na raiz.
+5. Valide a estrutura:
 
 ```bash
 # Linux / macOS
@@ -34,7 +45,7 @@ cd <NOME_DO_REPO>
 .\scripts\validation\validate-structure.ps1
 ```
 
-5. Coloque o conteúdo específico do projeto em `/core`.
+6. Coloque o conteúdo específico do projeto em `/core`.
 
 ## Variáveis de ambiente
 

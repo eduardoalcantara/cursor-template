@@ -41,8 +41,9 @@ current_prompt_start_time = ISO-8601
 | Saída | **não** alterar |
 | Commit+Push exclusivo | **não** alterar |
 
-Rodapé: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`  
-Duração do turno = agora − `current_prompt_start_time`.
+Rodapé: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm}m{ss}s.`  
+Exemplo: `> Resposta do Cursor nº 5, usando Composer, com duração de 00m42s.`  
+Duração do turno = agora − `current_prompt_start_time` (minutos e segundos com zero à esquerda; **não** usar `mm:ss`).
 
 ## CCIA / handoff
 

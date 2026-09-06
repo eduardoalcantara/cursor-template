@@ -17,6 +17,7 @@ Substitua os placeholders `[NOME DO PROJETO]`, `[RESUMO]`, `[PÚBLICO]` e demais
 
 | Caminho | Função |
 |---|---|
+| `scaffold-repo.ps1` / `scaffold-repo.sh` | Materialização determinística (raiz; pasta vazia) |
 | `spec-root.md` | Autoridade arquitetural do projeto |
 | `rules.md` / `.cursorrules` | Governança e comportamento do agente |
 | `flow.md` | Ordem de leitura e execução |
@@ -30,9 +31,16 @@ Substitua os placeholders `[NOME DO PROJETO]`, `[RESUMO]`, `[PÚBLICO]` e demais
 
 ## Como iniciar
 
-1. Crie um repositório novo a partir deste template no GitHub (**Use this template**).
-2. Clone o repositório e abra no Cursor.
-3. Leia, nesta ordem: `spec-root.md` → `rules.md` → `flow.md` → `setup.md`.
+1. Clone este template **ou** use **Use this template** no GitHub.
+2. Para um repo novo a partir de pasta vazia, rode o scaffold na raiz do clone:
+
+```powershell
+.\scaffold-repo.ps1 -Destination "<NOVO_REPO>" -Quiet -Force
+```
+
+3. No destino, personalize com `specs/optional/bootstrap-personalizar-projeto.md` e abra no Cursor.
+4. Leia: `spec-root.md` → `rules.md` → `flow.md` → `setup.md`.
+5. Coloque o domínio em `/core/`. Não peça ao Cursor para recriar a governança do zero.
 4. Preencha os placeholders do domínio do projeto.
 5. Coloque o conteúdo específico em `/core`.
 6. Atualize `status.md` e `timeline.md` a cada entrega relevante.

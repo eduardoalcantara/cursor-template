@@ -60,6 +60,8 @@ Write-Host ""
 $requiredFiles = @(
     '.gitignore',
     '.cursorignore',
+    'scaffold-repo.ps1',
+    'scaffold-repo.sh',
     'readme.md',
     'spec-project-bootstrap.md',
     'spec-root.md',

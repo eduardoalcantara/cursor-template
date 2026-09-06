@@ -6,7 +6,11 @@ Definir como scripts deste repositório são criados, organizados, executados e 
 
 ## Escopo
 
-Aplica-se a tudo em `scripts/` e a scripts auxiliares sob `/core` que afetem o ambiente ou o repositório.
+Aplica-se a tudo em `scripts/`, a scripts auxiliares sob `/core` que afetem o ambiente ou o repositório, e aos scripts de materialização na **raiz** `scaffold-repo.sh` / `scaffold-repo.ps1` (exceção chicken-egg: pasta vazia ainda não tem `scripts/`).
+
+## Exceção — scaffold na raiz
+
+`scaffold-repo.*` permanece na raiz do template de propósito: o destino começa vazio. Após o scaffold, scripts operacionais vivem sob `scripts/` conforme a organização abaixo.
 
 ## Limpeza inicial da tela
 
