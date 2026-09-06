@@ -1,0 +1,43 @@
+﻿# Dependências e ambientes
+node_modules/
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+dist/
+build/
+out/
+target/
+bin/
+obj/
+
+# Caches, logs, temporários
+.cache/
+*.log
+logs/
+*.tmp
+*.temp
+
+# Segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*
+secrets*
+
+# Binários e downloads do template
+resources/downloads/**
+*.exe
+*.dll
+*.zip
+*.7z
+*.iso
+*.img
+
+# Artefatos grandes / dumps
+*.dump
+*.vmdk
+*.vhdx

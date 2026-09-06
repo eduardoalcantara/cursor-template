@@ -4,7 +4,7 @@
 
 1. `spec-root.md` — autoridade arquitetural máxima
 2. `rules.md` — este arquivo (governança permanente)
-3. `.cursorrules` — comportamento do agente
+3. `.cursorrules` — comportamento do agente (canônico neste template)
 4. `flow.md` — sequência operacional
 5. `rules-scripts.md` — governança de scripts
 6. Specs em `specs/` — entregas formais
@@ -12,63 +12,56 @@
 
 Em conflito: nível superior prevalece. Se irresolvido → pause e peça esclarecimento.
 
+**Nota:** este template **não** depende de `.cursor/rules/` como fonte normativa. A norma vive em `.cursorrules` + este arquivo + bootstrap.
+
 ## Regras gerais permanentes
 
-- Não inventar requisitos.
-- Não extrapolar escopo.
+- Não inventar requisitos. Não extrapolar escopo.
 - Ser honesto sobre limites, dúvidas e validações.
 - Manter a raiz documental viva e coerente.
 - Conteúdo específico do projeto vive em `/core` sempre que aplicável.
+- Preferir mudanças pequenas; não reescrever o que o pedido não pediu.
 
 ## Regras de escopo
 
-- Implementar somente o que estiver confirmado em `spec-root.md` ou em specs ativas.
+- Implementar somente o confirmado em `spec-root.md` ou em specs ativas em `specs/to-do/`.
+- Spec ativa tem prioridade; não abrir escopo paralelo sem autorização.
 - Não misturar grupos/temas sem autorização.
-- Adaptações por domínio (software, hardware, SO, 3D, híbridos) devem preservar a raiz documental.
 
-## Regras de qualidade
+## Regras de qualidade e performance no Cursor
 
-- Preferir mudanças pequenas, claras e justificadas.
-- Não deixar código/documentação órfãos sem referência.
-- Nomear arquivos e pastas de forma previsível.
-- Evitar duplicar normas: referenciar o documento canônico.
+- Leitura **condicional** (ver `flow.md` / `.cursorrules`).
+- Orçamento de contexto: `@arquivo` pontual; evitar pastas grandes e CCIAs antigos.
+- Um prompt = um modo de tarefa.
+- Limite de exploração: pause com opções se não houver progresso.
+- `.cursorignore` deve excluir binários, downloads, logs e segredos da indexação.
 
 ## Regras de documentação
 
 - Mudanças relevantes atualizam `status.md` e `timeline.md`.
 - Entregas materiais geram relatório em `reports/`.
-- Specs novas usam `spec-template.md`.
-- Specs concluídas migram de `specs/to-do/` para `specs/done/`.
+- Specs novas usam `spec-template.md`; concluídas vão para `specs/done/`.
 
 ## Regras de validação
 
-- Validar o que for possível no ambiente.
-- Não afirmar sucesso sem evidência.
-- Registrar o que ficou sem validação.
+- Validar o possível; não afirmar sucesso sem evidência; registrar o não validado.
 
 ## Regras de bloqueio
 
-Pause e peça esclarecimento quando:
+Pause quando: faltar contexto; houver contradição; escopo indefinido; ação destrutiva sem confirmação.
 
-- faltar contexto essencial;
-- houver contradição documental;
-- o escopo estiver indefinido;
-- a ação for destrutiva ou irreversível sem confirmação.
+## Regras de atualização e rastreio
 
-## Regras de atualização
-
-- Alterar `spec-root.md` somente com intenção explícita de mudar a arquitetura.
-- Ao mudar regras permanentes, atualizar este arquivo e refletir em `.cursorrules` / `flow.md` se necessário.
-- Atualizar `.prompt-status` **somente na entrada** de cada resposta; **nunca** na saída.
-- Em pedido **exclusivo** de Commit + Push, **não** alterar `.prompt-status`.
-- Após prompt relevante, gravar CCIA em `prompts/` (ver `prompts/readme.md` e `spec-project-bootstrap.md` §5.11); mesma exceção Commit + Push.
-- Ao retomar noutro host: ler primeiro o handoff diário em `prompts/`.
+- Alterar `spec-root.md` só com intenção explícita de mudar a arquitetura.
+- `.prompt-status` mínimo (só `current_prompt_number` e `current_prompt_start_time`); update **só na entrada**; exceção Commit+Push.
+- CCIA: **gravar** após prompt relevante; **ler** só se o usuário pedir explicitamente.
+- Em Commit+Push exclusivo: não alterar `.prompt-status` nem criar CCIA.
 
 ## Regras de scripts (resumo)
 
 Detalhes em `rules-scripts.md`:
 
 - instalação com `--uninstall` reversível;
-- cabeçalho operacional tabelado, visualmente destacado em cor Ciano;
-- menus sempre através de lista numerada: `0` = não, `1` = sim, Enter = default;
-- obrigatoriedade de suportar execução não interativa e remota (`--quiet`, `--ssh`, `--force`, `--log`).
+- cabeçalho operacional tabelado em ciano;
+- menus numerados: `0` = não, `1` = sim, Enter = default;
+- modos `--quiet`, `--ssh`, `--force`, `--log` quando aplicável.

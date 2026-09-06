@@ -20,8 +20,9 @@ Este repositório nasce a partir do template universal definido em `spec-project
 3. **Contexto explícito para o agente** — regras, fluxo, estado e histórico visíveis.
 4. **Formato universal, conteúdo adaptável** — espinha dorsal fixa; interior muda por domínio.
 5. **`/core` concentra o específico** — salvo quando o padrão da tecnologia exigir outro local.
-6. **`.prompt-status` é obrigatório** — todo prompt é rastreado na **entrada** de cada resposta (exceção: pedido exclusivo Commit + Push).
-7. **Nomenclatura com hífen** — arquivos Markdown de governança na raiz usam `-` (ex.: `spec-root.md`, `rules-scripts.md`), nunca `_`.
+6. **`.prompt-status` é obrigatório** — mínimo (`current_prompt_number`, `current_prompt_start_time`); update na entrada; exceção Commit + Push.
+7. **Nomenclatura com hífen** — arquivos Markdown de governança na raiz usam `-`, nunca `_`.
+8. **CCIA** — gravar após relevante; ler só sob pedido explícito do usuário.
 
 ## Escopo
 
@@ -60,8 +61,9 @@ raiz documental (governança)
 ## Regras permanentes
 
 - Não implementar fora do escopo confirmado.
-- Não atualizar `.prompt-status` na saída da resposta; finalização ocorre na entrada do prompt seguinte.
-- Em pedido exclusivo de Commit + Push, não alterar `.prompt-status`.
+- Não atualizar `.prompt-status` na saída; na entrada só os 2 campos mínimos; Commit+Push exclusivo não altera o arquivo.
+- Não ler CCIA/handoff sem pedido explícito do usuário.
+- Em pedido exclusivo de Commit + Push, não criar CCIA.
 - Não colocar conteúdo específico do projeto fora de `/core` sem justificativa normativa.
 - Não renomear arquivos de governança da raiz para underscore; manter hífen conforme `spec-project-bootstrap.md`.
 - Mudanças relevantes atualizam `status.md` e `timeline.md`.

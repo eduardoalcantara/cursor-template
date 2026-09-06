@@ -1,82 +1,82 @@
 # .cursorrules — comportamento do agente neste repositório
 
 ## Perfil do agente
-- Você opera neste repositório com disciplina documental e escopo explícito.
-- Seja objetivo, consistente e previsível.
+- Objetivo, consistente e previsível.
 - Não invente requisitos. Não extrapole o escopo confirmado.
 - Prefira perguntar a assumir quando houver ambiguidade material.
 
 ## Honestidade e bloqueio
-- Diga imediatamente quando não souber fazer algo.
-- Distinga fato de suposição.
-- Não afirme validação que não ocorreu.
-- Não finja entender algo que não está documentado.
+- Diga imediatamente quando não souber.
+- Distinga fato de suposição. Não afirme validação que não ocorreu.
 - Se faltar contexto, houver contradição ou escopo indefinido: PAUSE e peça esclarecimento.
 
-## Leitura obrigatória antes de agir
-1. `spec-root.md` — autoridade arquitetural
-2. `rules.md` — governança permanente
-3. `.cursorrules` — este arquivo
-4. `.prompt-status` — estado de execução do prompt
-5. Ao retomar noutro host: handoff diário em `prompts/` (`YYYY-MM-DD-handoff-<hostname>.md`) e CCIAs relevantes
-6. `rules-scripts.md` — quando a tarefa envolver scripts
-7. `status.md` e `timeline.md` — contexto atual
-8. Specs e docs relevantes em `specs/` e `docs/`
+## Modo de tarefa (1 prompt = 1 modo)
+Identificar o modo do pedido e não misturar:
+- `explorar` | `implementar` | `corrigir` | `documentar` | `commit+push`
+- Proibido no mesmo pedido: refatorar amplo + feature nova + docs sem autorização.
 
-## Fluxo de `.prompt-status`
-- Ler `.prompt-status` antes de iniciar qualquer prompt.
-- Atualizar `.prompt-status` **somente na entrada** (início da resposta), **nunca na saída**.
-- Na entrada: finalizar o prompt anterior em `[last]` (se existir) e abrir `[current]` com status `running`, LLM, horário de início e resumo.
-- Status finais em `[last]`: `success`, `blocked` ou `failed`.
-- Preservar o histórico do último prompt concluído ao iniciar um novo.
-- **Exceção — Commit + Push:** quando o pedido for **exclusivamente** versionamento Git (`commit`, `push`, `commit + push` ou equivalente), **não** alterar `.prompt-status` (nem na entrada).
+## Leitura condicional (não ler tudo sempre)
+**Sempre:** este arquivo + `.prompt-status` (exceto Commit+Push exclusivo).
+**Sob pedido explícito do usuário:** ler CCIA/handoff indicado (ex.: troca de PC/notebook e `@arquivo`).
+**Se implementar/documentar:** `spec-root.md`, `rules.md`, `flow.md` conforme necessidade.
+**Se scripts:** `rules-scripts.md`.
+**Se entrega material:** `status.md` / `timeline.md`.
+**Se houver `specs/to-do/` ativa:** a spec ativa manda no escopo; não inventar paralelo.
 
-## CCIA — handoff multi-máquina (`prompts/`)
-- Após prompt **relevante**, gravar CCIA: `prompts/YYYY-MM-DD-NN-<hostname>-<resumo-curto>.md` (ver `prompts/readme.md` e `spec-project-bootstrap.md` §5.11).
-- Ao fechar sessão / pedido "handoff": atualizar `prompts/YYYY-MM-DD-handoff-<hostname>.md`.
-- **Exceção Commit + Push exclusivo:** não criar CCIA novo.
-- Não incluir senhas, tokens, webhooks, chaves ou PII desnecessária.
+## Orçamento de contexto
+- Preferir `@arquivo` pontual a `@pasta` grande.
+- Não anexar `reports/`, `resources/` ou CCIAs antigos por precaução.
+- Não ler handoff/CCIA automaticamente ao “retomar noutro host”; só quando o usuário pedir.
+
+## Limite de exploração
+No máximo ~8 buscas/leituras exploratórias sem progresso claro → PAUSE com o que faltou e opções numeradas.
+
+## Anti-refactor espontâneo
+Se o pedido não pedir refactor/renomeação/formatação ampla: não alterar arquivos vizinhos “para melhorar”.
+
+## Fluxo de `.prompt-status` (mínimo)
+Arquivo com **apenas** duas chaves:
+- `current_prompt_number`
+- `current_prompt_start_time`
+Na **entrada** (exceto Commit+Push exclusivo):
+1. Ler o arquivo.
+2. Duração do prompt anterior = agora − `current_prompt_start_time` (usar se útil no rodapé/histórico mental).
+3. Incrementar `current_prompt_number`.
+4. Gravar `current_prompt_start_time` = agora.
+**Saída:** nunca alterar o arquivo.
+**Commit+Push exclusivo:** não alterar o arquivo.
+
+## CCIA — gravar; ler só sob pedido
+- Após prompt **relevante**, gravar CCIA em `prompts/` (ver `prompts/readme.md`).
+- Handoff diário quando o usuário pedir "handoff" / "fechar sessão".
+- **Ler** CCIA/handoff **somente** se o usuário pedir explicitamente (ex.: troca de máquina + `@arquivo`).
+- Exceção Commit+Push exclusivo: não criar CCIA novo.
+- Sem senhas, tokens, webhooks, chaves ou PII.
+
+## Definição de pronto (DoD)
+Antes de declarar entrega concluída:
+- [ ] Escopo atendido
+- [ ] Validação feita ou limitação declarada
+- [ ] Docs (`status`/`timeline`) se material
+- [ ] CCIA gravado se relevante
+- [ ] Próximo passo explícito
 
 ## Dados mínimos por resposta relevante
-Toda resposta de entrega deve privilegiar:
-- o que foi alterado;
-- o que foi validado;
-- o que ficou pendente;
-- quais arquivos foram impactados;
-- qual o próximo passo;
-- quais documentos justificam a ação.
+- o que foi alterado; validado; pendente; arquivos; próximo passo; docs que justificam.
 
 ## Regras de resposta
-- Responder no idioma do usuário (padrão: português).
-- Ser direto; não encher a resposta com preâmbulos.
-- Citar documentos-raiz quando a ação depender deles.
-- **OBRIGATÓRIO**: A última linha da resposta deve usar dados de `.prompt-status` neste formato:
-  `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
+- Idioma do usuário (padrão: português). Direto, sem preâmbulos.
+- Última linha: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
+  - `Nn` = `current_prompt_number`; duração = agora − `current_prompt_start_time` (turno atual).
 
-## Regras de escopo
-- Implementar somente o escopo confirmado.
-- Conteúdo específico do projeto vive em `/core`, salvo quando o padrão da tecnologia exigir outro local.
-- Não misturar grupos ou temas sem autorização explícita.
+## Escopo e documentação
+- Só o escopo confirmado; domínio em `/core` quando aplicável.
+- Mudanças relevantes → `status.md`, `timeline.md`, specs/docs; `reports/` se material.
 
-## Regras de validação
-- Validar o que for possível no ambiente disponível.
-- Declarar claramente o que não foi validado.
-- Não marcar tarefa como concluída sem checklist de validação aplicável.
-
-## Regras de documentação
-Mudanças relevantes devem refletir em:
-- `status.md`
-- `timeline.md`
-- specs/docs afetados
-- relatório em `reports/` quando a entrega for material
-
-## Regras de scripts e input
-- Seguir `rules-scripts.md` para qualquer script criado ou alterado.
-- Scripts de instalação devem oferecer `--uninstall` (ou equivalente documentado) com reversão segura.
-- Escolhas do usuário: lista numerada; aguardar o número digitado.
-- Convenção: `0` = não/false/no; `1` = sim/true/yes.
-- Enter sem input seleciona o default documentado.
-- Validar entrada; se inválida, repetir o prompt com clareza.
+## Scripts e input
+- Seguir `rules-scripts.md`.
+- Instalação com `--uninstall` reversível.
+- Escolhas numeradas; `0`=não; `1`=sim; Enter=default.
 
 ## Regra final
-Se este arquivo conflitar com `spec-root.md` ou `rules.md`, a hierarquia normativa de `rules.md` prevalece; em caso de conflito irresolvido, pause e peça esclarecimento.
+Conflito com `spec-root.md` / `rules.md`: prevalece a hierarquia de `rules.md`; se irresolvido, pause.

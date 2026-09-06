@@ -1,84 +1,66 @@
 # flow.md — fluxo operacional do agente
 
-## Ordem de leitura obrigatória
+## Leitura condicional
 
-Antes de implementar ou alterar o repositório:
+Não ler a raiz inteira em todo prompt.
 
-1. `spec-root.md`
-2. `rules.md`
-3. `.cursorrules`
-4. `.prompt-status`
-5. Ao retomar noutro host: handoff diário em `prompts/` e CCIAs relevantes do dia
-6. `rules-scripts.md` — se a tarefa envolver scripts
-7. `status.md` e `timeline.md`
-8. Specs e docs relevantes em `specs/` e `docs/`
+| Situação | Ler |
+|---|---|
+| Sempre | `.cursorrules`, `.prompt-status` (exceto Commit+Push exclusivo) |
+| Usuário pediu atualizar via CCIA/handoff | O(s) arquivo(s) `@` indicados em `prompts/` |
+| Implementar / documentar | `spec-root.md`, `rules.md`, e trechos necessários de `flow.md` |
+| Scripts | `rules-scripts.md` |
+| Entrega material | `status.md`, `timeline.md` |
+| Spec ativa em `specs/to-do/` | A spec ativa (escopo mandatório) |
 
-Não pular a leitura obrigatória. Não começar implementação sem contexto.
+## Modos de tarefa
 
-## Fluxo de execução do agente
+Um prompt → um modo: `explorar` | `implementar` | `corrigir` | `documentar` | `commit+push`.
 
-1. Ler os documentos-raiz na ordem acima.
-2. Identificar o escopo confirmado da tarefa.
-3. Planejar a entrega (arquivos, validações, impactos).
-4. Atualizar `.prompt-status` no início (`current_prompt_status = running`; entrada apenas — ver § abaixo).
-5. Implementar ou documentar somente o escopo confirmado.
-6. Validar o que foi feito.
-7. Atualizar `status.md`.
-8. Atualizar `timeline.md`.
-9. Gravar CCIA em `prompts/` após prompt relevante; handoff diário se pedido ou ao fechar sessão.
-10. Produzir relatório em `reports/` quando a entrega for material.
-11. Registrar próximos passos na resposta e em `status.md`.
+## Fluxo de execução
 
-## Ordem de decisões
+1. Identificar modo e escopo.
+2. Ler só o necessário (tabela acima).
+3. Atualizar `.prompt-status` na entrada (2 campos; ver abaixo) — exceto Commit+Push exclusivo.
+4. Executar só o escopo confirmado (sem refactor espontâneo).
+5. Validar ou declarar limitação.
+6. Atualizar `status.md` / `timeline.md` se material.
+7. Gravar CCIA se prompt relevante (não criar em Commit+Push exclusivo).
+8. Responder com dados mínimos + DoD + rodapé.
 
-1. Há contexto suficiente? Se não → pause e peça esclarecimento.
-2. Há contradição entre documentos? Se sim → pause; não invente resolução.
-3. A tarefa cabe no escopo de `spec-root.md` / specs ativas? Se não → não implemente.
-4. A tarefa envolve scripts? Se sim → aplicar `rules-scripts.md`.
-5. O conteúdo é específico do projeto? Se sim → preferir `/core`.
+## `.prompt-status` (mínimo)
 
-## Gate de confirmação
-
-Antes de mudanças amplas (refactors, remoções, mudança de arquitetura):
-
-- Confirmar escopo com o usuário quando houver risco ou ambiguidade.
-- Não misturar grupos ou temas sem autorização.
-
-## Checklist de execução
-
-- [ ] Documentos-raiz lidos
-- [ ] Handoff/CCIA lidos ao retomar noutro host
-- [ ] `.prompt-status` atualizado na entrada (exceto pedido exclusivo Commit + Push)
-- [ ] Escopo confirmado
-- [ ] Implementação limitada ao escopo
-- [ ] Validações executadas ou declaradas como pendentes
-- [ ] `status.md` atualizado
-- [ ] `timeline.md` atualizado
-- [ ] CCIA gravado em `prompts/` (exceto Commit + Push exclusivo)
-- [ ] Relatório criado (se aplicável)
-
-## Passos de validação
-
-- Conferir se arquivos exigidos pela entrega existem e estão coerentes.
-- Executar scripts/testes aplicáveis ao domínio.
-- Declarar explicitamente o que não foi possível validar.
-
-## Passos de encerramento
-
-1. Gravar CCIA em `prompts/` (prompt relevante) ou handoff diário se pedido.
-2. Responder com: alterações, validações, pendências, arquivos impactados, próximo passo, documentos que justificam a ação.
-3. Rodapé com dados de `.prompt-status`: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
-4. **Não** atualizar `.prompt-status` na saída; a finalização ocorre na entrada do prompt seguinte.
-
-## Leitura e atualização de `.prompt-status`
+```text
+current_prompt_number = N
+current_prompt_start_time = ISO-8601
+```
 
 | Momento | Ação |
 |---|---|
-| Antes de iniciar | Ler o arquivo |
-| Na entrada | Finalizar prompt anterior em `[last]` (se existir); preencher `[current]` com status `running` |
-| Na saída | **Proibido** alterar o arquivo |
-| Commit + Push exclusivo | **Não** alterar o arquivo (nem na entrada); **não** criar CCIA novo |
+| Entrada | duração_anterior = agora − start; number++; start = agora |
+| Saída | **não** alterar |
+| Commit+Push exclusivo | **não** alterar |
 
-## CCIA / handoff (`prompts/`)
+Rodapé: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`  
+Duração do turno = agora − `current_prompt_start_time`.
 
-Ver `prompts/readme.md` e `spec-project-bootstrap.md` §5.11.
+## CCIA / handoff
+
+- **Gravar** após entrega relevante; handoff diário se pedido.
+- **Ler** somente sob pedido explícito do usuário (troca de máquina + `@arquivo`).
+- Detalhes: `prompts/readme.md` e `spec-project-bootstrap.md` §5.11.
+
+## Checklist (DoD)
+
+- [ ] Modo e escopo claros
+- [ ] Leitura condicional feita
+- [ ] `.prompt-status` atualizado na entrada (se aplicável)
+- [ ] Sem refactor fora do pedido
+- [ ] Validação ou limitação declarada
+- [ ] Docs atualizados se material
+- [ ] CCIA gravado se relevante
+- [ ] Próximo passo explícito
+
+## Limite de exploração
+
+Sem progresso após ~8 buscas/leituras → pause com opções numeradas.

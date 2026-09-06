@@ -1,24 +1,10 @@
 # .prompt-status
-# Rastreamento de execução de prompts do Cursor AI.
+# Rastreamento mínimo de prompts do Cursor AI.
 # Formato: chave = valor
-# Status válidos: running | success | blocked | failed
+# Na entrada de cada prompt (exceto Commit+Push exclusivo):
+# 1) duração do prompt anterior = agora - current_prompt_start_time
+# 2) incrementar current_prompt_number
+# 3) atualizar current_prompt_start_time = agora
 
-[current]
-current_prompt_number = 12
-current_prompt_start_time = 2026-09-06T15:19:00-03:00
-current_prompt_status = running
-current_prompt_llm = Composer
-current_prompt_summary = Sincronizar bootstrap solitário em 02_projects com template
-
-[last]
-last_prompt_number = 11
-last_prompt_start_time = 2026-09-06T15:18:00-03:00
-last_prompt_end_time = 2026-09-06T15:19:00-03:00
-last_prompt_duration_seconds = 60
-last_prompt_status = success
-last_prompt_llm = Composer
-last_prompt_summary = Comparar bootstrap do template com cópia em 02_projects
-
-[totals]
-total_prompts_tracked = 12
-total_execution_seconds = 2730
+current_prompt_number = 14
+current_prompt_start_time = 2026-09-06T16:04:00-03:00

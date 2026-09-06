@@ -40,7 +40,7 @@ Copie este molde para `specs/to-do/<nome-da-spec>.md` e preencha. Ao concluir, m
 - [ ] [Critério objetivo]
 - [ ] [Critério objetivo]
 - [ ] Documentação atualizada (`status.md`, `timeline.md` quando aplicável)
-- [ ] `.prompt-status` atualizado na entrada de cada prompt (exceto Commit + Push exclusivo)
+- [ ] `.prompt-status` atualizado na entrada (2 campos; exceto Commit+Push)
 
 ## Impacto
 

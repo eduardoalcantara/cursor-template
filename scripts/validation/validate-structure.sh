@@ -55,6 +55,7 @@ main() {
 
   local -a required_files=(
     .gitignore
+    .cursorignore
     readme.md
     spec-project-bootstrap.md
     spec-root.md
@@ -71,6 +72,10 @@ main() {
     rules-scripts.md
     prompts/readme.md
     prompts/bootstrap-personalizar-projeto.md
+    prompts/so-investigar.md
+    prompts/revisar-diff.md
+    prompts/fechar-sessao-handoff.md
+    prompts/validar-estrutura.md
     core/readme.md
   )
 

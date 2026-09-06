@@ -20,7 +20,7 @@ Substitua os placeholders `[NOME DO PROJETO]`, `[RESUMO]`, `[PÚBLICO]` e demais
 | `spec-root.md` | Autoridade arquitetural do projeto |
 | `rules.md` / `.cursorrules` | Governança e comportamento do agente |
 | `flow.md` | Ordem de leitura e execução |
-| `.prompt-status` | Rastreamento de cada prompt |
+| `.prompt-status` | Contador + horário de início do prompt atual |
 | `status.md` / `timeline.md` | Estado atual e histórico |
 | `setup.md` / `tools-*.md` | Ambiente e ferramentas |
 | `specs/` | Especificações formais (`to-do/`, `done/`) |

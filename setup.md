@@ -54,7 +54,7 @@ cd <NOME_DO_REPO>
 
 1. Crie a primeira spec em `specs/to-do/` usando `spec-template.md`.
 2. Peça ao Cursor para seguir `flow.md` e implementar somente o escopo da spec.
-3. Ao final, confira atualizações em `status.md` e `timeline.md`. O `.prompt-status` é atualizado **somente na entrada** de cada resposta (exceto pedido exclusivo Commit + Push).
+3. Ao final, confira `status.md` / `timeline.md` se material. `.prompt-status` tem só 2 campos e atualiza **somente na entrada** (exceto Commit+Push). CCIA: gravar se relevante; ler só se você pedir.
 
 ## Solução de problemas
 
