@@ -8,9 +8,10 @@ Antes de implementar ou alterar o repositório:
 2. `rules.md`
 3. `.cursorrules`
 4. `.prompt-status`
-5. `rules-scripts.md` — se a tarefa envolver scripts
-6. `status.md` e `timeline.md`
-7. Specs e docs relevantes em `specs/` e `docs/`
+5. Ao retomar noutro host: handoff diário em `prompts/` e CCIAs relevantes do dia
+6. `rules-scripts.md` — se a tarefa envolver scripts
+7. `status.md` e `timeline.md`
+8. Specs e docs relevantes em `specs/` e `docs/`
 
 Não pular a leitura obrigatória. Não começar implementação sem contexto.
 
@@ -24,8 +25,9 @@ Não pular a leitura obrigatória. Não começar implementação sem contexto.
 6. Validar o que foi feito.
 7. Atualizar `status.md`.
 8. Atualizar `timeline.md`.
-9. Produzir relatório em `reports/` quando a entrega for material.
-10. Registrar próximos passos na resposta e em `status.md`.
+9. Gravar CCIA em `prompts/` após prompt relevante; handoff diário se pedido ou ao fechar sessão.
+10. Produzir relatório em `reports/` quando a entrega for material.
+11. Registrar próximos passos na resposta e em `status.md`.
 
 ## Ordem de decisões
 
@@ -45,12 +47,14 @@ Antes de mudanças amplas (refactors, remoções, mudança de arquitetura):
 ## Checklist de execução
 
 - [ ] Documentos-raiz lidos
+- [ ] Handoff/CCIA lidos ao retomar noutro host
 - [ ] `.prompt-status` atualizado na entrada (exceto pedido exclusivo Commit + Push)
 - [ ] Escopo confirmado
 - [ ] Implementação limitada ao escopo
 - [ ] Validações executadas ou declaradas como pendentes
 - [ ] `status.md` atualizado
 - [ ] `timeline.md` atualizado
+- [ ] CCIA gravado em `prompts/` (exceto Commit + Push exclusivo)
 - [ ] Relatório criado (se aplicável)
 
 ## Passos de validação
@@ -61,9 +65,10 @@ Antes de mudanças amplas (refactors, remoções, mudança de arquitetura):
 
 ## Passos de encerramento
 
-1. Responder com: alterações, validações, pendências, arquivos impactados, próximo passo, documentos que justificam a ação.
-2. Rodapé com dados de `.prompt-status`: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
-3. **Não** atualizar `.prompt-status` na saída; a finalização ocorre na entrada do prompt seguinte.
+1. Gravar CCIA em `prompts/` (prompt relevante) ou handoff diário se pedido.
+2. Responder com: alterações, validações, pendências, arquivos impactados, próximo passo, documentos que justificam a ação.
+3. Rodapé com dados de `.prompt-status`: `> Resposta do Cursor nº {Nn}, usando {LLMs}, com duração de {mm:nn}.`
+4. **Não** atualizar `.prompt-status` na saída; a finalização ocorre na entrada do prompt seguinte.
 
 ## Leitura e atualização de `.prompt-status`
 
@@ -72,4 +77,8 @@ Antes de mudanças amplas (refactors, remoções, mudança de arquitetura):
 | Antes de iniciar | Ler o arquivo |
 | Na entrada | Finalizar prompt anterior em `[last]` (se existir); preencher `[current]` com status `running` |
 | Na saída | **Proibido** alterar o arquivo |
-| Commit + Push exclusivo | **Não** alterar o arquivo (nem na entrada) |
+| Commit + Push exclusivo | **Não** alterar o arquivo (nem na entrada); **não** criar CCIA novo |
+
+## CCIA / handoff (`prompts/`)
+
+Ver `prompts/readme.md` e `spec-project-bootstrap.md` §5.11.

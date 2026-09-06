@@ -60,6 +60,7 @@ Write-Host ""
 $requiredFiles = @(
     '.gitignore',
     'readme.md',
+    'spec-project-bootstrap.md',
     'spec-root.md',
     'flow.md',
     'rules.md',
@@ -71,7 +72,10 @@ $requiredFiles = @(
     '.cursorrules',
     '.prompt-status',
     'spec-template.md',
-    'rules-scripts.md'
+    'rules-scripts.md',
+    'prompts/readme.md',
+    'prompts/bootstrap-personalizar-projeto.md',
+    'core/readme.md'
 )
 
 $requiredDirs = @(
@@ -89,6 +93,7 @@ $requiredDirs = @(
     'reports',
     'prompts',
     'resources',
+    'resources/downloads',
     'core'
 )
 

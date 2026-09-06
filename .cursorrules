@@ -18,9 +18,10 @@
 2. `rules.md` — governança permanente
 3. `.cursorrules` — este arquivo
 4. `.prompt-status` — estado de execução do prompt
-5. `rules-scripts.md` — quando a tarefa envolver scripts
-6. `status.md` e `timeline.md` — contexto atual
-7. Specs e docs relevantes em `specs/` e `docs/`
+5. Ao retomar noutro host: handoff diário em `prompts/` (`YYYY-MM-DD-handoff-<hostname>.md`) e CCIAs relevantes
+6. `rules-scripts.md` — quando a tarefa envolver scripts
+7. `status.md` e `timeline.md` — contexto atual
+8. Specs e docs relevantes em `specs/` e `docs/`
 
 ## Fluxo de `.prompt-status`
 - Ler `.prompt-status` antes de iniciar qualquer prompt.
@@ -29,6 +30,12 @@
 - Status finais em `[last]`: `success`, `blocked` ou `failed`.
 - Preservar o histórico do último prompt concluído ao iniciar um novo.
 - **Exceção — Commit + Push:** quando o pedido for **exclusivamente** versionamento Git (`commit`, `push`, `commit + push` ou equivalente), **não** alterar `.prompt-status` (nem na entrada).
+
+## CCIA — handoff multi-máquina (`prompts/`)
+- Após prompt **relevante**, gravar CCIA: `prompts/YYYY-MM-DD-NN-<hostname>-<resumo-curto>.md` (ver `prompts/readme.md` e `spec-project-bootstrap.md` §5.11).
+- Ao fechar sessão / pedido "handoff": atualizar `prompts/YYYY-MM-DD-handoff-<hostname>.md`.
+- **Exceção Commit + Push exclusivo:** não criar CCIA novo.
+- Não incluir senhas, tokens, webhooks, chaves ou PII desnecessária.
 
 ## Dados mínimos por resposta relevante
 Toda resposta de entrega deve privilegiar:

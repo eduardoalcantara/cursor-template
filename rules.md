@@ -61,6 +61,8 @@ Pause e peça esclarecimento quando:
 - Ao mudar regras permanentes, atualizar este arquivo e refletir em `.cursorrules` / `flow.md` se necessário.
 - Atualizar `.prompt-status` **somente na entrada** de cada resposta; **nunca** na saída.
 - Em pedido **exclusivo** de Commit + Push, **não** alterar `.prompt-status`.
+- Após prompt relevante, gravar CCIA em `prompts/` (ver `prompts/readme.md` e `spec-project-bootstrap.md` §5.11); mesma exceção Commit + Push.
+- Ao retomar noutro host: ler primeiro o handoff diário em `prompts/`.
 
 ## Regras de scripts (resumo)
 

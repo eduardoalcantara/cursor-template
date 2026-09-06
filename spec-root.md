@@ -4,7 +4,7 @@
 
 [NOME DO PROJETO] existe para [PROPÓSITO EM UMA FRASE].
 
-Este repositório nasce a partir do template universal definido em `spec-project-bootstrap.md`, com estrutura documental completa e orientação explícita para o Cursor AI.
+Este repositório nasce a partir do template universal definido em `spec-project-bootstrap.md`, com estrutura documental completa e orientação explícita para o Cursor AI. Esse arquivo é a **receita** para reproduzir este repositório em pasta vazia.
 
 ## Visão geral
 

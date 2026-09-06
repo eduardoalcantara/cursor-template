@@ -56,6 +56,7 @@ main() {
   local -a required_files=(
     .gitignore
     readme.md
+    spec-project-bootstrap.md
     spec-root.md
     flow.md
     rules.md
@@ -68,6 +69,9 @@ main() {
     .prompt-status
     spec-template.md
     rules-scripts.md
+    prompts/readme.md
+    prompts/bootstrap-personalizar-projeto.md
+    core/readme.md
   )
 
   local -a required_dirs=(
@@ -85,6 +89,7 @@ main() {
     reports
     prompts
     resources
+    resources/downloads
     core
   )
 
