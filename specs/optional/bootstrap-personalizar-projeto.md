@@ -1,8 +1,12 @@
-# Cola de bootstrap — personalizar projeto a partir do template
+# Spec opcional — Personalizar projeto a partir do template
 
-Use este prompt no Cursor após criar um repositório a partir do template.
+> **Opt-in / cola:** vive em `specs/optional/`. Use após criar um repositório a partir do template (cole no chat ou promova o fluxo). Não é escopo contínuo de domínio.
 
----
+## Objetivo
+
+Personalizar placeholders e estado inicial do repositório recém-criado a partir do template, sem implementar o domínio ainda.
+
+## Como usar
 
 Modo: `documentar` / setup inicial.
 
@@ -18,3 +22,10 @@ Faça somente o seguinte:
 5. Atualizar `.prompt-status` na entrada (só `current_prompt_number` e `current_prompt_start_time`; exceção Commit+Push).
 
 Não implemente o domínio ainda. Não altere a estrutura de pastas sem necessidade. Coloque conteúdo específico futuro em `/core`. Não leia CCIA/handoff a menos que eu peça.
+
+## Critérios de aceite
+
+- [ ] Placeholders principais revisados
+- [ ] `status.md` e `timeline.md` atualizados
+- [ ] Primeira spec em `specs/to-do/` (se o operador definiu escopo)
+- [ ] Nenhuma implementação de domínio fora do pedido

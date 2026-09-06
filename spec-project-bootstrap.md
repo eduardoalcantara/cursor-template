@@ -76,7 +76,7 @@ Todo novo repositório deve possuir, sempre que aplicável, os seguintes itens n
 - `rules-scripts.md`
 - `docs/`
 - `ideas/`
-- `specs/` (`to-do/`, `done/`)
+- `specs/` (`to-do/`, `done/`, `optional/` — catálogo opt-in)
 - `references/`
 - `scripts/` (`bootstrap/`, `validation/`, `automation/`, `maintenance/`)
 - `reports/`
@@ -128,11 +128,13 @@ scripts/automation/readme.md
 scripts/maintenance/readme.md
 reports/readme.md
 prompts/readme.md
-prompts/bootstrap-personalizar-projeto.md
 prompts/so-investigar.md
 prompts/revisar-diff.md
 prompts/fechar-sessao-handoff.md
 prompts/validar-estrutura.md
+specs/optional/readme.md
+specs/optional/bootstrap-personalizar-projeto.md
+specs/optional/software-multi-produto.md
 resources/readme.md
 resources/downloads/.gitkeep
 core/readme.md
@@ -199,7 +201,7 @@ Armazena documentação técnica, operacional, normativa e de produto.
 Armazena hipóteses, rascunhos, propostas e ideias ainda não formalizadas.
 
 ### 3.17 `specs/`
-Armazena especificações formais do projeto, com subpastas obrigatórias `to-do/` e `done/` (cada uma com `readme.md`).
+Armazena especificações formais do projeto, com subpastas `to-do/` e `done/` (escopo ativo/concluído) e `optional/` (catálogo opt-in do template: só implementar após promoção a `to-do/`).
 
 ### 3.18 `references/`
 Armazena referências locais, engenharia reversa, exemplos e materiais de estudo.
@@ -211,7 +213,7 @@ Armazena scripts de automação, bootstrap, validação e apoio operacional, org
 Armazena relatórios de implementação, auditoria, validação e entrega.
 
 ### 3.21 `prompts/`
-Armazena colas oficiais e CCIA. Obrigatório na materialização: `readme.md`, `bootstrap-personalizar-projeto.md`, `so-investigar.md`, `revisar-diff.md`, `fechar-sessao-handoff.md`, `validar-estrutura.md`. **Gravar** CCIA após prompts relevantes; **ler** só sob pedido explícito do usuário.
+Armazena colas oficiais e CCIA. Obrigatório na materialização: `readme.md`, `so-investigar.md`, `revisar-diff.md`, `fechar-sessao-handoff.md`, `validar-estrutura.md`. Personalização inicial do repo: spec opt-in `specs/optional/bootstrap-personalizar-projeto.md`. **Gravar** CCIA após prompts relevantes; **ler** só sob pedido explícito do usuário.
 
 ### 3.22 `resources/`
 Armazena downloads, binários, imagens, apps auxiliares e materiais de apoio; inclui `downloads/` (com `.gitkeep` se vazia).
@@ -374,9 +376,11 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 ### 4.17 `specs/`
 - Specs formais.
 - Subpastas `to-do/` e `done/` com `readme.md`.
+- Subpasta `optional/` com catálogo opt-in (`readme.md` + specs como `bootstrap-personalizar-projeto.md`, `software-multi-produto.md`).
 - Cada spec com escopo e critério de aceite.
 - Relacionamento explícito com `spec-root.md`.
 - Ordem por domínio ou grupo.
+- Agent não implementa `optional/` por iniciativa própria.
 
 ### 4.18 `references/`
 - Links, estudos, comparativos.
@@ -401,9 +405,10 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 
 ### 4.21 `prompts/`
 - `readme.md` (CCIA + colas; leitura de handoff só sob pedido explícito).
-- Colas: `bootstrap-personalizar-projeto.md`, `so-investigar.md`, `revisar-diff.md`, `fechar-sessao-handoff.md`, `validar-estrutura.md`.
+- Colas: `so-investigar.md`, `revisar-diff.md`, `fechar-sessao-handoff.md`, `validar-estrutura.md`.
 - CCIA: `YYYY-MM-DD-NN-<hostname>-<resumo-curto>.md`.
 - Handoff diário: `YYYY-MM-DD-handoff-<hostname>.md`.
+- Personalizar projeto após criar o repo: `specs/optional/bootstrap-personalizar-projeto.md` (opt-in).
 
 ### 4.22 `resources/`
 - Downloads.
@@ -628,7 +633,7 @@ Quando o operador pedir para criar o repositório template (ou equivalente) **so
 2. Preencher cada arquivo da raiz com o wireframe da §4 e as regras das §5–§7 e §5.10–§5.11.
 3. Incluir cópia deste `spec-project-bootstrap.md` na raiz.
 4. Inicializar `.prompt-status` (template da §11) antes do primeiro prompt útil.
-5. Criar `prompts/readme.md` (CCIA + colas oficiais listadas na §2.1).
+5. Criar `prompts/readme.md` (CCIA + colas oficiais) e `specs/optional/` (catálogo opt-in, incl. `bootstrap-personalizar-projeto.md`).
 6. Criar `.cursorignore` e `validate-structure.sh` / `.ps1`.
 7. Rodar a validação estrutural e corrigir até passar.
 8. Preencher `status.md` e `timeline.md` com o evento de criação.

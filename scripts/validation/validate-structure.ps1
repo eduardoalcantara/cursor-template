@@ -75,11 +75,13 @@ $requiredFiles = @(
     'spec-template.md',
     'rules-scripts.md',
     'prompts/readme.md',
-    'prompts/bootstrap-personalizar-projeto.md',
     'prompts/so-investigar.md',
     'prompts/revisar-diff.md',
     'prompts/fechar-sessao-handoff.md',
     'prompts/validar-estrutura.md',
+    'specs/optional/readme.md',
+    'specs/optional/bootstrap-personalizar-projeto.md',
+    'specs/optional/software-multi-produto.md',
     'core/readme.md'
 )
 
@@ -89,6 +91,7 @@ $requiredDirs = @(
     'specs',
     'specs/to-do',
     'specs/done',
+    'specs/optional',
     'references',
     'scripts',
     'scripts/bootstrap',

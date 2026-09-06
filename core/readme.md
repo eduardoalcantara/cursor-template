@@ -8,7 +8,8 @@ Tudo que for próprio do domínio (código, modelos, schemas, componentes, ativo
 
 | Domínio | Subpastas possíveis |
 |---|---|
-| Software | `src/`, `tests/`, `api/`, `packages/` |
+| Software (app único) | `src/`, `tests/`, `api/`, `packages/` |
+| Software multi-produto | ver spec opt-in `specs/optional/software-multi-produto.md` → `shared/`, `db/`, `api/`, `web/`, `mobile/` |
 | Hardware | `cad/`, `bom/`, `schematics/`, `firmware/` |
 | Sistema operacional | `profiles/`, `policies/`, `services/` |
 | Impressão 3D | `models/`, `slicing/`, `materials/` |
@@ -17,3 +18,5 @@ Tudo que for próprio do domínio (código, modelos, schemas, componentes, ativo
 ## Regra
 
 A governança do repositório fica na raiz; o produto/domínio fica em `/core`.
+
+Para sistemas com DB + API + web + mobile: **não** inventar o layout — promover a spec opcional para `specs/to-do/` e seguir o aceite dela.

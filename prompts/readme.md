@@ -8,11 +8,12 @@ Colas **não** substituem `flow.md` / `.cursorrules`. CCIA **não** substitui `s
 
 | Arquivo | Uso |
 |---|---|
-| `bootstrap-personalizar-projeto.md` | Personalizar placeholders após criar o repo |
 | `so-investigar.md` | Só investigar; não editar |
 | `revisar-diff.md` | Revisar alterações / diff |
 | `fechar-sessao-handoff.md` | Fechar sessão e gravar handoff diário |
 | `validar-estrutura.md` | Rodar e interpretar `validate-structure` |
+
+Specs opt-in (incl. personalizar projeto): `specs/optional/`.
 
 ## CCIA — gravar após prompt relevante
 
