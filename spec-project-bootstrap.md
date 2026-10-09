@@ -40,18 +40,18 @@ Todo projeto deve conter uma pasta `/core`, que concentra as pastas, arquivos e 
 ### Regra obrigatória
 Tudo que for específico do projeto deve viver sob `/core` sempre que isso não contrariar o padrão da tecnologia ou do domínio.
 
-### 1.6 Existe um arquivo `.prompt-status`
-Todo projeto deve conter um arquivo `.prompt-status` na raiz com **apenas** duas chaves: `current_prompt_number` e `current_prompt_start_time` (ver §5.10 e §11).
+### 1.6 Existe um arquivo `.prompt-status` (local)
+Todo projeto deve ter um arquivo `.prompt-status` na raiz com **apenas** duas chaves: `current_prompt_number` e `current_prompt_start_time` (ver §5.10 e §11). O arquivo é **local**: listado em `.gitignore` e **nunca** versionado. Se ausente, o agente cria na entrada.
 
 ### 1.7 Rastreamento de execução é obrigatório
-Antes de executar um prompt, o Cursor AI deve ler `.prompt-status`.
+Antes de executar um prompt, o Cursor AI deve ler `.prompt-status` (criar se ausente).
 
-**Regra de atualização (entrada apenas):** o agente atualiza `.prompt-status` **somente no início da resposta**, **nunca na saída**. Na entrada: calcular duração do prompt anterior (`agora − current_prompt_start_time`), incrementar `current_prompt_number` e gravar novo `current_prompt_start_time`.
+**Regra de atualização (entrada apenas):** o agente atualiza `.prompt-status` **somente no início da resposta**, **nunca na saída**. Na entrada: se ausente, criar com `current_prompt_number = 1`; senão calcular duração do prompt anterior (`agora − current_prompt_start_time`), incrementar `current_prompt_number` e gravar novo `current_prompt_start_time`.
 
 **Exceção — Commit + Push:** quando o pedido for **exclusivamente** versionamento Git (`commit`, `push`, `commit + push` ou equivalente), **não** atualizar `.prompt-status` (nem na entrada).
 
 ### 1.8 Continuidade multi-máquina via CCIA
-O histórico de chat do Cursor **não** viaja com o Git. Todo repositório materializado deve nascer com `prompts/` preparado para **CCIA** (gravação após prompts relevantes; handoff diário sob pedido). A **leitura** de CCIA/handoff ocorre **somente** quando o usuário pedir explicitamente (ex.: troca de PC + `@arquivo`) — ver §5.11.
+O histórico de chat do Cursor **não** viaja com o Git. Todo **projeto derivado** (materializado) deve nascer com `prompts/` preparado para **CCIA**: **1 arquivo por chat**, transcrição **literal** prompt↔resposta (append após prompts relevantes); handoff diário sob pedido. CCIA **não** é resumo de entrega (`timeline.md` / `status.md`). O **repositório-fonte deste template** não grava arquivos CCIA de conversa. A **leitura** de CCIA/handoff ocorre **somente** quando o usuário pedir explicitamente (ex.: troca de PC + `@arquivo`) — ver §5.11.
 
 ### 1.9 Performance de trabalho no Cursor
 Leitura condicional, orçamento de `@`, um modo por prompt, anti-refactor espontâneo, limite de exploração, `.cursorignore` e DoD — ver §5.4 e §5.12. A norma canônica do agente neste template é `.cursorrules` na raiz (não depender de `.cursor/rules/`).
@@ -76,7 +76,7 @@ Todo novo repositório deve possuir, sempre que aplicável, os seguintes itens n
 - `tools-linux.md`
 - `tools-windows.md`
 - `.cursorrules`
-- `.prompt-status`
+- `.prompt-status` (local; no `.gitignore`; criar na entrada se ausente)
 - `spec-template.md`
 - `rules-scripts.md`
 - `docs/`
@@ -117,7 +117,7 @@ setup.md
 tools-linux.md
 tools-windows.md
 .cursorrules
-.prompt-status
+.prompt-status          # local / .gitignore — scaffold ou agente cria; não versionar
 spec-template.md
 rules-scripts.md
 docs/readme.md
@@ -196,7 +196,7 @@ Lista ferramentas, pacotes e comandos relevantes para Windows.
 Define comportamento, honestidade, limites e formato de resposta do agente no repositório.
 
 ### 3.12 `.prompt-status`
-Arquivo mínimo com `current_prompt_number` e `current_prompt_start_time`. Atualização **apenas na entrada** (ver §5.10 e §11).
+Arquivo **local** (`.gitignore`; nunca versionar) com `current_prompt_number` e `current_prompt_start_time`. Criar se ausente. Atualização **apenas na entrada** (ver §5.10 e §11).
 
 ### 3.13 `spec-template.md`
 Fornece o molde para novas specs do projeto.
@@ -223,7 +223,7 @@ Armazena scripts de automação, bootstrap, validação e apoio operacional, org
 Armazena relatórios de implementação, auditoria, validação e entrega.
 
 ### 3.21 `prompts/`
-Armazena colas oficiais e CCIA. Obrigatório na materialização: `readme.md`, `so-investigar.md`, `revisar-diff.md`, `fechar-sessao-handoff.md`, `validar-estrutura.md`. Personalização inicial do repo: spec opt-in `specs/optional/bootstrap-personalizar-projeto.md`. **Gravar** CCIA após prompts relevantes; **ler** só sob pedido explícito do usuário.
+Armazena colas oficiais e CCIA. Obrigatório na materialização: `readme.md`, `so-investigar.md`, `revisar-diff.md`, `fechar-sessao-handoff.md`, `validar-estrutura.md`. Personalização inicial do repo: spec opt-in `specs/optional/bootstrap-personalizar-projeto.md`. Em **projetos derivados**: **gravar/append** CCIA (transcrição literal, 1 arquivo por chat) após prompts relevantes; **ler** só sob pedido explícito. No **repo-fonte do template**: não gravar CCIA de conversa.
 
 ### 3.22 `resources/`
 Armazena downloads, binários, imagens, apps auxiliares e materiais de apoio; inclui `downloads/` (com `.gitkeep` se vazia).
@@ -272,8 +272,8 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Fluxo de execução do agente.
 - Checklist / DoD.
 - Limite de exploração.
-- `.prompt-status` mínimo (entrada apenas).
-- CCIA: gravar após relevante; ler só sob pedido explícito.
+- `.prompt-status` mínimo (local / `.gitignore`; entrada apenas).
+- CCIA: transcrição literal por chat (derivados); ler só sob pedido explícito.
 
 ### 4.5 `rules.md`
 - Hierarquia normativa.
@@ -328,14 +328,15 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - Modo de tarefa (1 prompt = 1 modo).
 - Leitura condicional e orçamento de contexto.
 - Limite de exploração e anti-refactor espontâneo.
-- `.prompt-status` mínimo (2 campos; entrada apenas; exceção Commit + Push).
-- CCIA: gravar; ler só sob pedido explícito.
+- `.prompt-status` mínimo (2 campos; local / `.gitignore`; entrada apenas; exceção Commit + Push).
+- CCIA: transcrição literal por chat (derivados); ler só sob pedido explícito.
 - DoD e dados mínimos de resposta.
 - Scripts e input.
 - Norma canônica do agente neste template (preferir `.cursorrules` na raiz a `.cursor/rules/` fragmentado).
 
 ### 4.12 `.prompt-status`
 - Apenas `current_prompt_number` e `current_prompt_start_time`.
+- Local: listado em `.gitignore`; **nunca** commitá-lo; criar se ausente.
 - Sem seções `[current]`/`[last]`/`[totals]`, sem LLM/status/resumo no arquivo.
 
 ### 4.13 `spec-template.md`
@@ -416,8 +417,9 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 ### 4.21 `prompts/`
 - `readme.md` (CCIA + colas; leitura de handoff só sob pedido explícito).
 - Colas: `so-investigar.md`, `revisar-diff.md`, `fechar-sessao-handoff.md`, `validar-estrutura.md`.
-- CCIA: `YYYY-MM-DD-NN-<hostname>-<resumo-curto>.md`.
-- Handoff diário: `YYYY-MM-DD-handoff-<hostname>.md`.
+- CCIA (projetos derivados): `YYYY-MM-DD-<hostname>-<slug-chat>.md` — 1 arquivo por chat; transcrição literal; append.
+- Handoff diário: `YYYY-MM-DD-handoff-<hostname>.md` (resumo de sessão; distinto do CCIA).
+- Repo-fonte do template: sem arquivos CCIA de conversa.
 - Personalizar projeto após criar o repo: `specs/optional/bootstrap-personalizar-projeto.md` (opt-in).
 
 ### 4.22 `resources/`
@@ -494,7 +496,7 @@ Sempre que o usuário precisar tomar uma escolha, o script deve exibir uma lista
 
 ### 5.10 Regras de `.prompt-status`
 
-Arquivo mínimo (somente estas chaves):
+Arquivo **local** mínimo (somente estas chaves). Listado em `.gitignore`; **nunca** versionar.
 
 ```text
 current_prompt_number = N
@@ -502,14 +504,15 @@ current_prompt_start_time = ISO-8601-com-offset
 ```
 
 #### Momento da atualização
-- **Entrada (obrigatório):** no início de cada resposta, ler e atualizar.
+- **Entrada (obrigatório):** no início de cada resposta, ler e atualizar (criar se ausente).
 - **Saída (proibido):** não atualizar ao finalizar.
 
 #### Fluxo na entrada
-1. Ler `.prompt-status`.
-2. Duração do prompt anterior = `agora − current_prompt_start_time` (útil para o rodapé do turno que acabou / auditoria mental; **não** precisa ser persistida no arquivo).
-3. Incrementar `current_prompt_number`.
-4. Gravar `current_prompt_start_time` = agora.
+1. Se `.prompt-status` não existir, criar com `current_prompt_number = 1` e `current_prompt_start_time` = agora; ir ao rodapé.
+2. Ler `.prompt-status`.
+3. Duração do prompt anterior = `agora − current_prompt_start_time` (útil para o rodapé do turno que acabou / auditoria mental; **não** precisa ser persistida no arquivo).
+4. Incrementar `current_prompt_number`.
+5. Gravar `current_prompt_start_time` = agora.
 
 #### Exceção — pedido exclusivo de Commit + Push
 Não alterar `.prompt-status` na entrada nem na saída.
@@ -522,37 +525,53 @@ Formato **errado**: `00:42`.
 
 ### 5.11 Handoff CCIA multi-máquina
 
-O histórico de chat do Cursor **não** é versionado no GitHub. A ponte é o **CCIA** em `prompts/`, sincronizado por commit/push.
+O histórico de chat do Cursor **não** é versionado no GitHub. A ponte é o **CCIA** em `prompts/` dos **projetos derivados**, sincronizado por commit/push.
 
 #### Propósito
-Continuidade entre hosts. `.prompt-status` só numera e ancora tempo; `status.md` / `timeline.md` são estado do projeto — **não substituem** o CCIA.
+Continuidade entre hosts: outra máquina deve recuperar **o diálogo** (prompts e respostas literais), não um resumo de entrega. `.prompt-status` só numera e ancora tempo (local). `status.md` / `timeline.md` são estado do projeto — **não substituem** o CCIA; CCIA **não** duplica o papel deles.
+
+#### Escopo
+- **Projetos derivados:** gravar/append CCIA conforme abaixo.
+- **Repositório-fonte deste template:** **não** gravar arquivos CCIA de conversa (apenas colas + `prompts/readme.md`).
 
 #### Quando gravar
-- Após prompt **relevante** (entrega, decisão, diagnóstico, alteração).
-- **Exceção:** Commit+Push exclusivo → não criar CCIA.
+- Após prompt **relevante** (entrega, decisão, diagnóstico, alteração): criar o arquivo do chat se ainda não existir; senão **append**.
+- **Exceção:** Commit+Push exclusivo → não gravar/append CCIA.
 
 #### Quando ler (importante)
 - **Somente** se o usuário pedir **explicitamente** (ex.: “estava no PC, agora no notebook — analise `@prompts/...`”).
 - **Proibido** ler handoff/CCIA automaticamente só por mudança de hostname ou `git pull`.
 
-#### Nomenclatura (hífen; nunca underscore)
+#### Nomenclatura (hífen; nunca underscore) — 1 arquivo por chat
 
 ```text
-YYYY-MM-DD-NN-<hostname>-<resumo-curto>.md
+YYYY-MM-DD-<hostname>-<slug-chat>.md
 ```
 
 | Parte | Regra |
 |---|---|
-| `YYYY-MM-DD` | Data local |
-| `NN` | `current_prompt_number` (padding só se o projeto já usar) |
+| `YYYY-MM-DD` | Data local do início do chat |
 | `hostname` | Hostname curto ASCII |
-| `resumo-curto` | 3–6 palavras kebab-case, sem acentos |
+| `slug-chat` | 3–6 palavras kebab-case (tema do chat), sem acentos |
 
-#### Conteúdo mínimo
-Título `# CCIA — …`; data/hora + hostname; pedido; feito/decisões; arquivos; validações; pendências; próximo passo. Sem segredos/PII.
+#### Conteúdo — transcrição literal (não resumo)
+
+Cada turno em append:
+
+```markdown
+## Turno N — YYYY-MM-DD HH:mm (hostname)
+
+### Prompt
+<texto literal do usuário>
+
+### Resposta
+<texto literal da resposta final do agente>
+```
+
+**Proibido** condensar em “pedido / feito / decisões / arquivos” — isso é `timeline.md` / `status.md`. Sem segredos/PII (redigir tokens, senhas, webhooks, chaves).
 
 #### Handoff diário
-Quando o usuário pedir "handoff" / "fechar sessão": `prompts/YYYY-MM-DD-handoff-<hostname>.md` (estado, bloqueios, onde paramos, CCIAs do dia, próximo passo único).
+Quando o usuário pedir "handoff" / "fechar sessão": `prompts/YYYY-MM-DD-handoff-<hostname>.md` — **resumo de sessão** (estado, bloqueios, onde paramos, CCIAs do dia, próximo passo único). Distinto da transcrição CCIA.
 
 #### Idioma
 PT-BR.
@@ -581,14 +600,14 @@ O `flow.md` deve orientar a sequência de trabalho no repositório.
 5. Executar só o escopo; sem refactor espontâneo.
 6. Validar ou declarar limitação.
 7. Atualizar `status.md` / `timeline.md` se material.
-8. Gravar CCIA se relevante (§5.11).
+8. Gravar/append CCIA se relevante (§5.11; projetos derivados; não no repo-fonte do template).
 9. Responder com DoD + rodapé.
 
 ### Regras
 - Não ler a raiz inteira por padrão.
 - Não ler CCIA/handoff sem pedido explícito.
-- Não atualizar `.prompt-status` na saída.
-- Em Commit+Push exclusivo: não alterar `.prompt-status` nem criar CCIA.
+- Não atualizar `.prompt-status` na saída; não commitá-lo (`.gitignore`).
+- Em Commit+Push exclusivo: não alterar `.prompt-status` nem gravar/append CCIA.
 - Spec ativa tem prioridade de escopo.
 
 ---
@@ -655,7 +674,7 @@ Contrato dos scripts:
 1. Fonte = diretório do script (deve conter `spec-project-bootstrap.md`).
 2. Destino ≠ fonte.
 3. Copia a árvore canônica da §2.1 (conteúdos idênticos ao template).
-4. Reinicia `.prompt-status` mínimo no destino.
+4. Cria `.prompt-status` mínimo local no destino (arquivo fica no `.gitignore`; não versionar).
 5. Grava `.scaffold-manifest` para `--uninstall` reverter só o que criou.
 6. Flags: `--uninstall`, `--quiet`/`-q`, `--force`/`-f`, `--ssh`, `--log` (conforme `rules-scripts.md`).
 7. Após scaffold: rodar `validate-structure` no destino.
@@ -671,13 +690,13 @@ O Cursor deve:
 
 - reconhecer a natureza do projeto;
 - preferir scaffold + personalização em vez de gerar a raiz do zero;
-- manter consistência entre `spec-project-bootstrap.md`, `spec-root.md`, `rules.md`, `.cursorrules`, `.prompt-status`, `flow.md`, `rules-scripts.md` e `prompts/readme.md`;
+- manter consistência entre `spec-project-bootstrap.md`, `spec-root.md`, `rules.md`, `.cursorrules`, `flow.md`, `rules-scripts.md`, `prompts/readme.md` e a regra de `.prompt-status` local;
 - usar **hífen** (`-`) nos nomes dos arquivos de governança da raiz (nunca underscore);
 - não confundir arquivo de visão com arquivo operacional;
 - manter `status.md` e `timeline.md` vivos desde o início;
 - colocar tudo que é específico do projeto sob `/core` sempre que aplicável;
-- inicializar `.prompt-status` mínimo (2 campos) antes do primeiro prompt útil (o scaffold já deixa `0`);
-- garantir CCIA documentado (gravar relevante; ler só sob pedido explícito).
+- garantir `.prompt-status` mínimo local (2 campos; `.gitignore`) antes do primeiro prompt útil (scaffold ou agente cria; nunca commitá-lo);
+- garantir CCIA documentado (transcrição literal por chat nos derivados; ler só sob pedido explícito; sem CCIA de conversa no repo-fonte do template).
 
 ---
 
@@ -695,18 +714,19 @@ Um novo repositório está realmente pronto quando:
 - como documentar progresso;
 - onde ficam as referências e `/core`;
 - como o agente se comporta (`.cursorrules`);
-- como rastrear prompts com `.prompt-status` mínimo;
-- como usar CCIA (gravar; ler só sob pedido explícito).
+- como rastrear prompts com `.prompt-status` mínimo local (`.gitignore`);
+- como usar CCIA (transcrição literal por chat nos derivados; ler só sob pedido explícito).
 
 ---
 
 ## 11. Template de `.prompt-status`
 
-Formato mínimo obrigatório:
+Formato mínimo obrigatório. Arquivo **local** (`.gitignore`; nunca versionar):
 
 ```text
 # .prompt-status
 # Na entrada (exceto Commit+Push exclusivo):
+# se ausente → criar com current_prompt_number = 1
 # duração_anterior = agora - current_prompt_start_time
 # current_prompt_number += 1
 # current_prompt_start_time = agora
@@ -725,9 +745,10 @@ current_prompt_start_time = 2026-01-01T00:00:00-03:00
 - Commit+Push exclusivo → não alterar.
 - Não gravar LLM, status, resumo nem totais neste arquivo.
 - Duração do turno no rodapé = `agora − current_prompt_start_time`.
+- **Nunca** `git add` / commit de `.prompt-status`.
 
 ---
 
 ## 12. Resumo normativo
 
-`spec-project-bootstrap.md` é a receita normativa do template; a materialização determinística é `scaffold-repo.ps1` / `scaffold-repo.sh` na raiz (árvore §2.1), com `.cursorrules` canônico, `.prompt-status` mínimo, CCIA, performance (§5.12), scripts reversíveis e domínio em `/core`.
+`spec-project-bootstrap.md` é a receita normativa do template; a materialização determinística é `scaffold-repo.ps1` / `scaffold-repo.sh` na raiz (árvore §2.1), com `.cursorrules` canônico, `.prompt-status` mínimo **local** (`.gitignore`), CCIA como transcrição literal por chat nos derivados, performance (§5.12), scripts reversíveis e domínio em `/core`.

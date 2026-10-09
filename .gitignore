@@ -64,6 +64,10 @@ htmlcov/
 *.local
 .local/
 
+# Estado local do agente Cursor (nunca versionar)
+.prompt-status
+
+
 # Downloads locais em resources (preservar .gitkeep)
 resources/downloads/*
 !resources/downloads/.gitkeep

@@ -21,14 +21,16 @@ Um prompt → um modo: `explorar` | `implementar` | `corrigir` | `documentar` | 
 
 1. Identificar modo e escopo.
 2. Ler só o necessário (tabela acima).
-3. Atualizar `.prompt-status` na entrada (2 campos; ver abaixo) — exceto Commit+Push exclusivo.
+3. Atualizar `.prompt-status` na entrada (2 campos; local / `.gitignore`; criar se ausente) — exceto Commit+Push exclusivo.
 4. Executar só o escopo confirmado (sem refactor espontâneo).
 5. Validar ou declarar limitação.
 6. Atualizar `status.md` / `timeline.md` se material.
-7. Gravar CCIA se prompt relevante (não criar em Commit+Push exclusivo).
+7. Gravar/append CCIA se prompt relevante (projetos derivados; não no repo-fonte do template; não em Commit+Push exclusivo).
 8. Responder com dados mínimos + DoD + rodapé.
 
-## `.prompt-status` (mínimo)
+## `.prompt-status` (mínimo, local)
+
+Arquivo no `.gitignore` — **nunca** versionar. Se ausente na entrada, criar com `current_prompt_number = 1`.
 
 ```text
 current_prompt_number = N
@@ -37,7 +39,7 @@ current_prompt_start_time = ISO-8601
 
 | Momento | Ação |
 |---|---|
-| Entrada | duração_anterior = agora − start; number++; start = agora |
+| Entrada | se ausente → criar (number = 1); senão duração_anterior = agora − start; number++; start = agora |
 | Saída | **não** alterar |
 | Commit+Push exclusivo | **não** alterar |
 
@@ -47,7 +49,10 @@ Duração do turno = agora − `current_prompt_start_time` (minutos e segundos c
 
 ## CCIA / handoff
 
-- **Gravar** após entrega relevante; handoff diário se pedido.
+- **Gravar/append** (projetos derivados): 1 arquivo por chat; transcrição **literal** prompt↔resposta; após entrega relevante.
+- CCIA **não** é resumo de entrega — isso é `timeline.md` / `status.md`.
+- Repo-fonte deste template: **não** gravar CCIA de conversa.
+- Handoff diário (resumo de sessão) se pedido.
 - **Ler** somente sob pedido explícito do usuário (troca de máquina + `@arquivo`).
 - Detalhes: `prompts/readme.md` e `spec-project-bootstrap.md` §5.11.
 
@@ -55,11 +60,11 @@ Duração do turno = agora − `current_prompt_start_time` (minutos e segundos c
 
 - [ ] Modo e escopo claros
 - [ ] Leitura condicional feita
-- [ ] `.prompt-status` atualizado na entrada (se aplicável)
+- [ ] `.prompt-status` atualizado na entrada (se aplicável; nunca commitá-lo)
 - [ ] Sem refactor fora do pedido
 - [ ] Validação ou limitação declarada
 - [ ] Docs atualizados se material
-- [ ] CCIA gravado se relevante
+- [ ] CCIA gravado/append se relevante (derivados; não no repo-fonte do template)
 - [ ] Próximo passo explícito
 
 ## Limite de exploração

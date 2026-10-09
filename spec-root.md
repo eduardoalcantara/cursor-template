@@ -20,9 +20,9 @@ Este repositório nasce a partir do template universal definido em `spec-project
 3. **Contexto explícito para o agente** — regras, fluxo, estado e histórico visíveis.
 4. **Formato universal, conteúdo adaptável** — espinha dorsal fixa; interior muda por domínio.
 5. **`/core` concentra o específico** — salvo quando o padrão da tecnologia exigir outro local.
-6. **`.prompt-status` é obrigatório** — mínimo (`current_prompt_number`, `current_prompt_start_time`); update na entrada; exceção Commit + Push.
+6. **`.prompt-status` é obrigatório e local** — mínimo (`current_prompt_number`, `current_prompt_start_time`); no `.gitignore`; nunca versionar; update na entrada; criar se ausente; exceção Commit + Push.
 7. **Nomenclatura com hífen** — arquivos Markdown de governança na raiz usam `-`, nunca `_`.
-8. **CCIA** — gravar após relevante; ler só sob pedido explícito do usuário.
+8. **CCIA** — nos projetos derivados: 1 arquivo por chat, transcrição literal prompt↔resposta (append após relevante); não é resumo de entrega (`timeline.md` / `status.md`); ler só sob pedido explícito. No repo-fonte deste template: não gravar CCIA de conversa.
 
 ## Escopo
 
@@ -56,14 +56,15 @@ raiz documental (governança)
 | O que é permitido | `rules.md` |
 | Como scripts funcionam | `rules-scripts.md` |
 | Onde está o domínio | `/core` |
-| Como se rastreia prompts | `.prompt-status` |
+| Como se rastreia prompts | `.prompt-status` (local / `.gitignore`) |
 
 ## Regras permanentes
 
 - Não implementar fora do escopo confirmado.
-- Não atualizar `.prompt-status` na saída; na entrada só os 2 campos mínimos; Commit+Push exclusivo não altera o arquivo.
+- Não atualizar `.prompt-status` na saída; na entrada só os 2 campos mínimos (criar se ausente); nunca commitá-lo; Commit+Push exclusivo não altera o arquivo.
 - Não ler CCIA/handoff sem pedido explícito do usuário.
-- Em pedido exclusivo de Commit + Push, não criar CCIA.
+- Em pedido exclusivo de Commit + Push, não gravar/append CCIA.
+- CCIA não substitui `timeline.md` / `status.md`; no repo-fonte do template não gravar CCIA de conversa.
 - Não colocar conteúdo específico do projeto fora de `/core` sem justificativa normativa.
 - Não renomear arquivos de governança da raiz para underscore; manter hífen conforme `spec-project-bootstrap.md`.
 - Mudanças relevantes atualizam `status.md` e `timeline.md`.
@@ -78,7 +79,8 @@ O repositório está pronto quando o Cursor responde sem ambiguidade:
 - como documentar progresso;
 - onde ficam referências e o núcleo em `/core`;
 - como o agente se comporta;
-- como rastrear cada prompt em `.prompt-status` (entrada apenas; exceção Commit + Push).
+- como rastrear cada prompt em `.prompt-status` local (entrada apenas; `.gitignore`; exceção Commit + Push);
+- como usar CCIA (transcrição literal por chat nos derivados; ler só sob pedido explícito).
 
 ## Conclusão normativa
 

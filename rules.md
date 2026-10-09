@@ -54,8 +54,11 @@ Pause quando: faltar contexto; houver contradição; escopo indefinido; ação d
 
 - Alterar `spec-root.md` só com intenção explícita de mudar a arquitetura.
 - `.prompt-status` mínimo (só `current_prompt_number` e `current_prompt_start_time`); update **só na entrada**; exceção Commit+Push.
-- CCIA: **gravar** após prompt relevante; **ler** só se o usuário pedir explicitamente.
-- Em Commit+Push exclusivo: não alterar `.prompt-status` nem criar CCIA.
+- `.prompt-status` é **local**: listado em `.gitignore`; **nunca** commitá-lo. Se ausente, criar na entrada com `current_prompt_number = 1`.
+- CCIA (projetos derivados): **1 arquivo por chat**, transcrição **literal** prompt↔resposta (append); **não** é resumo de entrega (`timeline.md` / `status.md`).
+- CCIA: **gravar/append** após prompt relevante; **ler** só se o usuário pedir explicitamente.
+- Repositório-fonte deste template: **não** gravar arquivos CCIA de conversa.
+- Em Commit+Push exclusivo: não alterar `.prompt-status` nem gravar/append CCIA.
 
 ## Regras de scripts (resumo)
 

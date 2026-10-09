@@ -35,22 +35,25 @@ No máximo ~8 buscas/leituras exploratórias sem progresso claro → PAUSE com o
 Se o pedido não pedir refactor/renomeação/formatação ampla: não alterar arquivos vizinhos “para melhorar”.
 
 ## Fluxo de `.prompt-status` (mínimo)
-Arquivo com **apenas** duas chaves:
+Arquivo **local** (está no `.gitignore`; **nunca** versionar) com **apenas** duas chaves:
 - `current_prompt_number`
 - `current_prompt_start_time`
 Na **entrada** (exceto Commit+Push exclusivo):
-1. Ler o arquivo.
-2. Duração do prompt anterior = agora − `current_prompt_start_time` (usar se útil no rodapé/histórico mental).
-3. Incrementar `current_prompt_number`.
-4. Gravar `current_prompt_start_time` = agora.
+1. Se o arquivo não existir, criar com `current_prompt_number = 1` e `current_prompt_start_time` = agora; seguir.
+2. Ler o arquivo.
+3. Duração do prompt anterior = agora − `current_prompt_start_time` (usar se útil no rodapé/histórico mental).
+4. Incrementar `current_prompt_number`.
+5. Gravar `current_prompt_start_time` = agora.
 **Saída:** nunca alterar o arquivo.
 **Commit+Push exclusivo:** não alterar o arquivo.
 
-## CCIA — gravar; ler só sob pedido
-- Após prompt **relevante**, gravar CCIA em `prompts/` (ver `prompts/readme.md`).
-- Handoff diário quando o usuário pedir "handoff" / "fechar sessão".
+## CCIA — transcrição literal; ler só sob pedido
+- Projetos derivados: após prompt **relevante**, gravar/append CCIA em `prompts/` — **1 arquivo por chat**, texto **literal** do prompt e da resposta (ver `prompts/readme.md`).
+- CCIA **não** é resumo de entrega; resumo vai em `timeline.md` / `status.md`.
+- Repositório-fonte deste template: **não** gravar CCIA de conversa.
+- Handoff diário (resumo de sessão) quando o usuário pedir "handoff" / "fechar sessão".
 - **Ler** CCIA/handoff **somente** se o usuário pedir explicitamente (ex.: troca de máquina + `@arquivo`).
-- Exceção Commit+Push exclusivo: não criar CCIA novo.
+- Exceção Commit+Push exclusivo: não gravar/append CCIA.
 - Sem senhas, tokens, webhooks, chaves ou PII.
 
 ## Definição de pronto (DoD)
@@ -58,7 +61,7 @@ Antes de declarar entrega concluída:
 - [ ] Escopo atendido
 - [ ] Validação feita ou limitação declarada
 - [ ] Docs (`status`/`timeline`) se material
-- [ ] CCIA gravado se relevante
+- [ ] CCIA gravado/append se relevante (projetos derivados; não no repo-fonte do template)
 - [ ] Próximo passo explícito
 
 ## Dados mínimos por resposta relevante
