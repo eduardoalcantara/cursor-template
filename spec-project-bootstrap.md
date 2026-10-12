@@ -35,10 +35,14 @@ O Cursor deve encontrar no repositório as regras, o fluxo, o estado, o históri
 A espinha dorsal se mantém; o interior das pastas muda conforme o domínio do projeto.
 
 ### 1.5 Existe uma pasta `/core`
-Todo projeto deve conter uma pasta `/core`, que concentra as pastas, arquivos e artefatos específicos do projeto.
+Todo projeto deve conter uma pasta `/core`: o **essencial do produto/sistema**, não apenas “código solto”.
 
-### Regra obrigatória
-Tudo que for específico do projeto deve viver sob `/core` sempre que isso não contrariar o padrão da tecnologia ou do domínio.
+#### Critérios de decisão (normativos)
+1. **Cópia mínima:** se for preciso continuar a manutenção copiando só o indispensável (alterar código, compilar, rodar, gerar instalador), deve bastar copiar **apenas `/core`**. Inclui scripts **essenciais** a esses propósitos. Scripts que servem ao **repositório** (validação estrutural, bootstrap documental, automação de template) ficam em `scripts/` na raiz — têm mais a ver com o repo do que com o produto em produção.
+2. **Incêndio:** o que se colocaria debaixo do braço e se salvaria se não desse tempo de salvar tudo — isso vive em `/core`.
+
+#### Regra obrigatória
+Tudo que for essencial ao produto deve viver sob `/core` sempre que isso não contrariar o padrão da tecnologia ou do domínio. Governança da raiz, CCIA, docs de apoio e scripts não essenciais ao produto **não** pertencem a `/core`.
 
 ### 1.6 Existe um arquivo `.prompt-status` (local)
 Todo projeto deve ter um arquivo `.prompt-status` na raiz com **apenas** duas chaves: `current_prompt_number` e `current_prompt_start_time` (ver §5.10 e §11). O arquivo é **local**: listado em `.gitignore` e **nunca** versionado. Se ausente, o agente cria na entrada.
@@ -229,7 +233,7 @@ Armazena colas oficiais e CCIA. Obrigatório na materialização: `readme.md`, `
 Armazena downloads, binários, imagens, apps auxiliares e materiais de apoio; inclui `downloads/` (com `.gitkeep` se vazia).
 
 ### 3.23 `core/`
-Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arquivos-fonte, ativos, modelos, componentes e artefatos operacionais próprios do repositório. Deve nascer com `core/readme.md`.
+Armazena o **essencial do produto**: fontes, contratos, assets necessários ao build/run, e scripts essenciais para alterar/compilar/rodar/instalar. Critérios: cópia mínima e “incêndio” (§1.5). **Não** confundir com `scripts/` da raiz (apoio ao repo). Deve nascer com `core/readme.md`.
 
 ---
 
@@ -431,11 +435,12 @@ Armazena o conteúdo específico do projeto, incluindo pastas de domínio, arqui
 - `readme.md` e `downloads/.gitkeep` (se a pasta estiver vazia).
 
 ### 4.23 `core/`
-- Código ou conteúdo central do projeto.
+- Essencial do produto (critérios §1.5: cópia mínima + “incêndio”).
+- Código, contratos, modelos, schemas, componentes, ativos e dados centrais necessários à manutenção/build/run/install.
+- Scripts essenciais do produto (build, run, pack, instalador) — **não** scripts só do repositório.
 - Subpastas específicas do domínio.
-- Modelos, schemas, componentes, ativos e dados centrais.
-- Tudo que é específico do projeto e não da governança do repositório.
-- `readme.md` obrigatório na materialização inicial.
+- Exclui governança da raiz, CCIA, docs de apoio e `scripts/` da raiz.
+- `readme.md` obrigatório na materialização inicial (deve explicar os dois critérios).
 
 ---
 

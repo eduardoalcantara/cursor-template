@@ -1,5 +1,12 @@
 # timeline.md — histórico evolutivo (cronológico reverso)
 
+## 2026-10-12 — Critérios explícitos de `/core`
+
+- **Evento:** documentação de `/core` como essencial do produto (cópia mínima para manter/compilar/rodar/instalar; critério do “incêndio”), com fronteira vs `scripts/` da raiz.
+- **Impacto:** reduz ambiguidade do agente em repos de sistemas sobre o que deve ir em `/core`.
+- **Arquivos afetados:** `core/readme.md`, `scripts/readme.md`, `readme.md`, `spec-root.md`, `spec-project-bootstrap.md`, `status.md`, `timeline.md`.
+- **Observações:** scripts essenciais do produto ficam em `/core`; scripts só do repositório ficam em `scripts/`.
+
 ## 2026-07-26 — Padronização de nomes com hífen
 
 - **Evento:** renomeação de `spec_root.md`, `spec_template.md` e `rules_scripts.md` para hífen.

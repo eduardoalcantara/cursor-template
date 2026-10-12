@@ -10,7 +10,7 @@ Este repositório nasce a partir do template universal definido em `spec-project
 
 - O projeto é governado pelos documentos da raiz.
 - O agente opera segundo `flow.md`, `rules.md` e `.cursorrules`.
-- O conteúdo específico do domínio vive em `/core`.
+- O essencial do produto/sistema vive em `/core` (código e scripts necessários para manter, compilar, rodar e instalar).
 - O progresso é rastreado em `status.md`, `timeline.md` e `.prompt-status`.
 
 ## Princípios fundacionais
@@ -19,7 +19,7 @@ Este repositório nasce a partir do template universal definido em `spec-project
 2. **A raiz orienta** — cada arquivo da raiz tem função operacional.
 3. **Contexto explícito para o agente** — regras, fluxo, estado e histórico visíveis.
 4. **Formato universal, conteúdo adaptável** — espinha dorsal fixa; interior muda por domínio.
-5. **`/core` concentra o específico** — salvo quando o padrão da tecnologia exigir outro local.
+5. **`/core` é o essencial do produto** — o que bastaria copiar sozinho para continuar a manutenção (alterar, compilar, rodar, gerar instalador), inclusive scripts essenciais a esses fins; e o que se salvaria “no incêndio” se não desse tempo de salvar tudo. O que for só do repositório (não do produto em prod) fica fora — ex.: `scripts/` na raiz. Exceção: padrão da tecnologia exigir outro local.
 6. **`.prompt-status` é obrigatório e local** — mínimo (`current_prompt_number`, `current_prompt_start_time`); no `.gitignore`; nunca versionar; update na entrada; criar se ausente; exceção Commit + Push.
 7. **Nomenclatura com hífen** — arquivos Markdown de governança na raiz usam `-`, nunca `_`.
 8. **CCIA** — nos projetos derivados: 1 arquivo por chat, transcrição literal prompt↔resposta (append após relevante); não é resumo de entrega (`timeline.md` / `status.md`); ler só sob pedido explícito. No repo-fonte deste template: não gravar CCIA de conversa.
@@ -44,7 +44,7 @@ raiz documental (governança)
 ├── estado e histórico
 ├── specs / docs / prompts
 ├── scripts / reports / resources
-└── core/  ← domínio do projeto
+└── core/  ← essencial do produto (cópia mínima / “incêndio”)
 ```
 
 ## Contratos centrais
@@ -55,7 +55,7 @@ raiz documental (governança)
 | Como o agente age | `flow.md`, `.cursorrules` |
 | O que é permitido | `rules.md` |
 | Como scripts funcionam | `rules-scripts.md` |
-| Onde está o domínio | `/core` |
+| Onde está o essencial do produto | `/core` (`core/readme.md`) |
 | Como se rastreia prompts | `.prompt-status` (local / `.gitignore`) |
 
 ## Regras permanentes
@@ -65,7 +65,8 @@ raiz documental (governança)
 - Não ler CCIA/handoff sem pedido explícito do usuário.
 - Em pedido exclusivo de Commit + Push, não gravar/append CCIA.
 - CCIA não substitui `timeline.md` / `status.md`; no repo-fonte do template não gravar CCIA de conversa.
-- Não colocar conteúdo específico do projeto fora de `/core` sem justificativa normativa.
+- Não colocar o essencial do produto fora de `/core` sem justificativa normativa; scripts essenciais de build/run/installer do produto ficam em `/core`, não em `scripts/` da raiz.
+- `/core` ≠ pasta genérica de “código”: é o mínimo operacional do produto (critérios em `core/readme.md`).
 - Não renomear arquivos de governança da raiz para underscore; manter hífen conforme `spec-project-bootstrap.md`.
 - Mudanças relevantes atualizam `status.md` e `timeline.md`.
 
@@ -77,7 +78,7 @@ O repositório está pronto quando o Cursor responde sem ambiguidade:
 - quais são as regras;
 - como operar e validar;
 - como documentar progresso;
-- onde ficam referências e o núcleo em `/core`;
+- onde fica o essencial do produto em `/core` (cópia mínima / critério do “incêndio”);
 - como o agente se comporta;
 - como rastrear cada prompt em `.prompt-status` local (entrada apenas; `.gitignore`; exceção Commit + Push);
 - como usar CCIA (transcrição literal por chat nos derivados; ler só sob pedido explícito).

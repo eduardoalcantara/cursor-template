@@ -2,11 +2,11 @@
 
 ## Última atualização
 
-2026-07-26
+2026-10-12
 
 ## Resumo do estado atual
 
-Template universal implementado conforme `spec-project-bootstrap.md`. Estrutura raiz, pastas operacionais, governança do agente e rastreamento de prompts estão prontos para uso via GitHub Template Repository.
+Template universal conforme `spec-project-bootstrap.md`. Norma de `/core` reforçada: essencial do produto (cópia mínima / critério do “incêndio”), com fronteira clara vs `scripts/` da raiz.
 
 ## Tarefas concluídas
 
@@ -37,4 +37,5 @@ Template universal implementado conforme `spec-project-bootstrap.md`. Estrutura 
 
 ## Mudanças recentes
 
+- Critérios de `/core` (cópia mínima + “incêndio”) documentados em `core/readme.md`, `scripts/readme.md`, `readme.md`, `spec-root.md` e `spec-project-bootstrap.md`.
 - Fundação documental e operacional criada a partir de `spec-project-bootstrap.md`.

@@ -25,8 +25,8 @@ Substitua os placeholders `[NOME DO PROJETO]`, `[RESUMO]`, `[PÚBLICO]` e demais
 | `status.md` / `timeline.md` | Estado atual e histórico |
 | `setup.md` / `tools-*.md` | Ambiente e ferramentas |
 | `specs/` | Especificações formais (`to-do/`, `done/`) |
-| `core/` | Conteúdo específico do projeto |
-| `scripts/` | Automações e bootstrap |
+| `core/` | Essencial do produto: o mínimo para manter/compilar/rodar/instalar (ver `core/readme.md`) |
+| `scripts/` | Automações do **repositório** (não do produto em prod) |
 | `docs/`, `ideas/`, `references/`, `reports/`, `prompts/`, `resources/` | Apoio documental e operacional |
 
 ## Como iniciar
@@ -39,10 +39,8 @@ Substitua os placeholders `[NOME DO PROJETO]`, `[RESUMO]`, `[PÚBLICO]` e demais
 ```
 
 3. No destino, personalize com `specs/optional/bootstrap-personalizar-projeto.md` e abra no Cursor.
-4. Leia: `spec-root.md` → `rules.md` → `flow.md` → `setup.md`.
-5. Coloque o domínio em `/core/`. Não peça ao Cursor para recriar a governança do zero.
-4. Preencha os placeholders do domínio do projeto.
-5. Coloque o conteúdo específico em `/core`.
+4. Leia: `spec-root.md` → `rules.md` → `flow.md` → `setup.md` → `core/readme.md`.
+5. Preencha os placeholders e coloque em `/core` tudo o que for essencial ao produto (código + scripts de build/run/installer). Não peça ao Cursor para recriar a governança do zero.
 6. Atualize `status.md` e `timeline.md` a cada entrega relevante.
 
 Detalhes de ambiente: ver `setup.md`, `tools-linux.md` e `tools-windows.md`.
