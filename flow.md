@@ -9,6 +9,7 @@ Não ler a raiz inteira em todo prompt.
 | Sempre | `.cursorrules`, `.prompt-status` (exceto Commit+Push exclusivo) |
 | Usuário pediu atualizar via CCIA/handoff | O(s) arquivo(s) `@` indicados em `prompts/` |
 | Implementar / documentar | `spec-root.md`, `rules.md`, e trechos necessários de `flow.md` |
+| Repo/entrega de software/sistemas | `software-development-rules.md` (SOLID, DI, padrões); **ignorar** se o domínio não for software |
 | Scripts | `rules-scripts.md` |
 | Entrega material | `status.md`, `timeline.md` |
 | Spec ativa em `specs/to-do/` | A spec ativa (escopo mandatório) |

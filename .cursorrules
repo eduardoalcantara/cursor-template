@@ -19,6 +19,7 @@ Identificar o modo do pedido e não misturar:
 **Sempre:** este arquivo + `.prompt-status` (exceto Commit+Push exclusivo).
 **Sob pedido explícito do usuário:** ler CCIA/handoff indicado (ex.: troca de PC/notebook e `@arquivo`).
 **Se implementar/documentar:** `spec-root.md`, `rules.md`, `flow.md` conforme necessidade.
+**Se o repositório/entrega for desenvolvimento de software/sistemas:** seguir `software-development-rules.md` (SOLID, DI, padrões). **Caso contrário, ignorar** esse arquivo.
 **Se scripts:** `rules-scripts.md`.
 **Se entrega material:** `status.md` / `timeline.md`.
 **Se houver `specs/to-do/` ativa:** a spec ativa manda no escopo; não inventar paralelo.

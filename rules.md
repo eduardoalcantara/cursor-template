@@ -7,8 +7,9 @@
 3. `.cursorrules` — comportamento do agente (canônico neste template)
 4. `flow.md` — sequência operacional
 5. `rules-scripts.md` — governança de scripts
-6. Specs em `specs/` — entregas formais
-7. Docs, ideas e references — apoio (não normativo por padrão)
+6. `software-development-rules.md` — engenharia de software (SOLID, DI, padrões); **só** se o repo/entrega for software/sistemas
+7. Specs em `specs/` — entregas formais
+8. Docs, ideas e references — apoio (não normativo por padrão)
 
 Em conflito: nível superior prevalece. Se irresolvido → pause e peça esclarecimento.
 
@@ -35,6 +36,7 @@ Em conflito: nível superior prevalece. Se irresolvido → pause e peça esclare
 - Um prompt = um modo de tarefa.
 - Limite de exploração: pause com opções se não houver progresso.
 - `.cursorignore` deve excluir binários, downloads, logs e segredos da indexação.
+- Qualidade de **código de software**: quando aplicável, `software-development-rules.md` (referência de padrões: [Refactoring.Guru — Design Patterns](https://refactoring.guru/design-patterns/catalog)).
 
 ## Regras de documentação
 

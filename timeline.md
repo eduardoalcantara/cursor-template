@@ -1,5 +1,12 @@
 # timeline.md — histórico evolutivo (cronológico reverso)
 
+## 2026-10-20 — Regras de engenharia de software (condicionais)
+
+- **Evento:** criação de `software-development-rules.md` (SOLID, DI, design patterns) com referência ao catálogo [Refactoring.Guru](https://refactoring.guru/design-patterns/catalog); leitura condicional em `.cursorrules` / `flow.md`.
+- **Impacto:** repos de software/sistemas passam a ter norma de código; demais domínios ignoram o arquivo.
+- **Arquivos afetados:** `software-development-rules.md`, `.cursorrules`, `flow.md`, `rules.md`, scaffolds, `validate-structure.*`, `readme.md`, `status.md`, `timeline.md`.
+- **Observações:** não autoriza refactor espontâneo; aplica-se só quando o domínio for software.
+
 ## 2026-10-12 — Critérios explícitos de `/core`
 
 - **Evento:** documentação de `/core` como essencial do produto (cópia mínima para manter/compilar/rodar/instalar; critério do “incêndio”), com fronteira vs `scripts/` da raiz.

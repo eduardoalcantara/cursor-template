@@ -76,6 +76,7 @@ $requiredFiles = @(
     '.prompt-status',
     'spec-template.md',
     'rules-scripts.md',
+    'software-development-rules.md',
     'prompts/readme.md',
     'prompts/so-investigar.md',
     'prompts/revisar-diff.md',

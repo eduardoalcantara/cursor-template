@@ -2,11 +2,11 @@
 
 ## Última atualização
 
-2026-10-12
+2026-10-20
 
 ## Resumo do estado atual
 
-Template universal conforme `spec-project-bootstrap.md`. Norma de `/core` reforçada: essencial do produto (cópia mínima / critério do “incêndio”), com fronteira clara vs `scripts/` da raiz.
+Template universal conforme `spec-project-bootstrap.md`. Inclui `software-development-rules.md` (SOLID, DI, padrões via Refactoring.Guru), leitura condicional só para repos de software/sistemas. Norma de `/core` (cópia mínima / “incêndio”) mantida.
 
 ## Tarefas concluídas
 
@@ -37,5 +37,6 @@ Template universal conforme `spec-project-bootstrap.md`. Norma de `/core` refor�
 
 ## Mudanças recentes
 
+- `software-development-rules.md` adicionado; referência condicional em `.cursorrules` / `flow.md`.
 - Critérios de `/core` (cópia mínima + “incêndio”) documentados em `core/readme.md`, `scripts/readme.md`, `readme.md`, `spec-root.md` e `spec-project-bootstrap.md`.
 - Fundação documental e operacional criada a partir de `spec-project-bootstrap.md`.

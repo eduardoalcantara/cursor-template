@@ -41,6 +41,7 @@ $Script:FileList = @(
     '.prompt-status',
     'spec-template.md',
     'rules-scripts.md',
+    'software-development-rules.md',
     'scaffold-repo.ps1',
     'scaffold-repo.sh',
     'docs/readme.md',

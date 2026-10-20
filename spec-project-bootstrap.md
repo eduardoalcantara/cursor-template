@@ -83,6 +83,7 @@ Todo novo repositório deve possuir, sempre que aplicável, os seguintes itens n
 - `.prompt-status` (local; no `.gitignore`; criar na entrada se ausente)
 - `spec-template.md`
 - `rules-scripts.md`
+- `software-development-rules.md` (condicional: só software/sistemas)
 - `docs/`
 - `ideas/`
 - `specs/` (`to-do/`, `done/`, `optional/` — catálogo opt-in)
@@ -124,6 +125,7 @@ tools-windows.md
 .prompt-status          # local / .gitignore — scaffold ou agente cria; não versionar
 spec-template.md
 rules-scripts.md
+software-development-rules.md
 docs/readme.md
 ideas/readme.md
 specs/readme.md
@@ -207,6 +209,9 @@ Fornece o molde para novas specs do projeto.
 
 ### 3.14 `rules-scripts.md`
 Define a governança de criação e execução de scripts, incluindo organização, input, cabeçalho, autodetecção da raiz, UX operacional e desinstalação reversa.
+
+### 3.14b `software-development-rules.md`
+Norma de engenharia de software (SOLID, DI, design patterns). **Condicional:** seguir só se o repositório/entrega for software/sistemas; ignorar nos demais domínios. Catálogo de referência: [Refactoring.Guru — Design Patterns](https://refactoring.guru/design-patterns/catalog).
 
 ### 3.15 `docs/`
 Armazena documentação técnica, operacional, normativa e de produto.
@@ -476,6 +481,7 @@ Não ler a raiz inteira em todo prompt.
 - **Sempre:** `.cursorrules` + `.prompt-status` (exceto Commit+Push exclusivo).
 - **Sob pedido explícito:** CCIA/handoff `@` indicado pelo usuário.
 - **Se implementar/documentar:** `spec-root.md` / `rules.md` / trechos de `flow.md`.
+- **Se o repo/entrega for software/sistemas:** `software-development-rules.md`; caso contrário, ignorar.
 - **Se scripts:** `rules-scripts.md`.
 - **Se entrega material:** `status.md` / `timeline.md`.
 - **Se spec ativa em `specs/to-do/`:** a spec manda no escopo.
@@ -695,7 +701,7 @@ O Cursor deve:
 
 - reconhecer a natureza do projeto;
 - preferir scaffold + personalização em vez de gerar a raiz do zero;
-- manter consistência entre `spec-project-bootstrap.md`, `spec-root.md`, `rules.md`, `.cursorrules`, `flow.md`, `rules-scripts.md`, `prompts/readme.md` e a regra de `.prompt-status` local;
+- manter consistência entre `spec-project-bootstrap.md`, `spec-root.md`, `rules.md`, `.cursorrules`, `flow.md`, `rules-scripts.md`, `software-development-rules.md`, `prompts/readme.md` e a regra de `.prompt-status` local;
 - usar **hífen** (`-`) nos nomes dos arquivos de governança da raiz (nunca underscore);
 - não confundir arquivo de visão com arquivo operacional;
 - manter `status.md` e `timeline.md` vivos desde o início;

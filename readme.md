@@ -20,6 +20,7 @@ Substitua os placeholders `[NOME DO PROJETO]`, `[RESUMO]`, `[PÚBLICO]` e demais
 | `scaffold-repo.ps1` / `scaffold-repo.sh` | Materialização determinística (raiz; pasta vazia) |
 | `spec-root.md` | Autoridade arquitetural do projeto |
 | `rules.md` / `.cursorrules` | Governança e comportamento do agente |
+| `software-development-rules.md` | SOLID, DI e padrões (só se o repo for software/sistemas) |
 | `flow.md` | Ordem de leitura e execução |
 | `.prompt-status` | Contador + horário de início do prompt atual |
 | `status.md` / `timeline.md` | Estado atual e histórico |
